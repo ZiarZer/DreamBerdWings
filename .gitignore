@@ -1,0 +1,6 @@
+*.yy.cc
+*.tab.cc
+*.tab.hh
+position.hh
+src/parse/location.hh
+stack.hh
