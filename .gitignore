@@ -6,3 +6,7 @@ src/parse/location.hh
 stack.hh
 dreamberdwings
 dbw
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
