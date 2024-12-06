@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../ast/all.hh"
 #include "dreamberd-scanner.hh"
 
 namespace parse {
@@ -21,6 +22,7 @@ namespace parse {
 
     parse::location get_location() const;
 
+    ast::NumberExp* make_NumberExp(const parse::location& location, int value) const;
   private:
     DreamBerdScanner scanner_;
     DreamBerdParser parser_;
@@ -28,3 +30,5 @@ namespace parse {
   };
 
 } // namespace parse
+
+#include "dreamberd-driver.hxx"
