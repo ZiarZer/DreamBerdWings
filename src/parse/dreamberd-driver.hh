@@ -23,6 +23,11 @@ namespace parse {
     parse::location get_location() const;
 
     ast::NumberExp* make_NumberExp(const parse::location& location, int value) const;
+    ast::BinaryOpExp* make_BinaryOpExp(const parse::location& location,
+                                       ast::Exp* left,
+                                       ast::BinaryOpExp::Oper operation,
+                                       ast::Exp* right) const;
+
   private:
     DreamBerdScanner scanner_;
     DreamBerdParser parser_;
