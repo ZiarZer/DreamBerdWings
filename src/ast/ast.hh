@@ -1,5 +1,6 @@
 #pragma once
 
+#include "fwd.hh"
 #include "location.hh"
 
 namespace ast {
@@ -13,6 +14,8 @@ namespace ast {
 
     const Location& location_get() const;
     void location_set(const Location& location);
+
+    virtual void accept(Visitor& v) const = 0;
 
   protected:
     Location location_;

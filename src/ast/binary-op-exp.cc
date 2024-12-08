@@ -21,4 +21,8 @@ namespace ast {
       return "";
     }
   }
+
+  void BinaryOpExp::accept(Visitor& v) const {
+    v(*this);
+  }
 } // namespace ast

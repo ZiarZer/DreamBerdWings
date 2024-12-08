@@ -1,6 +1,7 @@
 #pragma once
 
 #include "exp.hh"
+#include "visitor.hh"
 
 namespace ast {
   class BinaryOpExp : public Exp {
@@ -14,6 +15,8 @@ namespace ast {
     Oper operation_get() const;
     Exp* left_get() const;
     Exp* right_get() const;
+
+    void accept(Visitor& v) const override;
 
   protected:
     Oper operation_;

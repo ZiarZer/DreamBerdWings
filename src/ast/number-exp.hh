@@ -1,6 +1,7 @@
 #pragma once
 
 #include "exp.hh"
+#include "visitor.hh"
 
 namespace ast {
   class NumberExp : public Exp {
@@ -10,6 +11,8 @@ namespace ast {
     NumberExp& operator=(const NumberExp&) = delete;
 
     int value_get() const;
+
+    void accept(Visitor& v) const override;
 
   protected:
     int value_;
