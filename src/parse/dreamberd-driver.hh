@@ -32,6 +32,7 @@ namespace parse {
     DreamBerdScanner scanner_;
     DreamBerdParser parser_;
     parse::location location_;
+    ast::Exp* ast_;
   };
 
 } // namespace parse

@@ -5,7 +5,8 @@ using namespace parse;
 DreamBerdDriver::DreamBerdDriver()
   : scanner_(*this)
   , parser_(scanner_, *this)
-  , location_() {}
+  , location_()
+  , ast_(nullptr) {}
 
 int DreamBerdDriver::parse() {
   std::cout << "> ";

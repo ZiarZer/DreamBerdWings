@@ -18,6 +18,7 @@
 %code top
 {
     #include "dreamberd-driver.hh"
+    #include "../ast/pretty-printer.hh"
 
     // yylex() arguments defined in parser.yy
     static parse::DreamBerdParser::symbol_type yylex(parse::DreamBerdScanner &scanner, parse::DreamBerdDriver &driver) {
@@ -41,16 +42,16 @@
 %left ADD "+" SUB "-";
 %left MUL "*" DIV "/";
 
-%type <int> exp instruction instructions;
+%type <ast::Exp*> exp instruction instructions;
 
 %start program
 
 %%
 
-program: instructions EOF { return $1; }
+program: instructions EOF { driver.ast_ = $1; return 0; }
 
 instruction:
-    exp EOL { std::cout << "Result: " << $1 << std::endl << "> "; $$ = $1; }
+    exp EOL { std::cout << "Parsed AST: " << *$1<< std::endl << "> "; $$ = $1; }
   | EOL { std::cout << std::endl << "> "; $$ = 0; }
   ;
 
@@ -60,11 +61,11 @@ instructions:
   ;
 
 exp:
-    INT { $$ = $1; }
-  | exp ADD exp { $$ = $1 + $3; }
-  | exp SUB exp { $$ = $1 - $3; }
-  | exp MUL exp { $$ = $1 * $3; }
-  | exp DIV exp { $$ = $1 / $3; }
+    INT { $$ = driver.make_NumberExp(@$, $1); }
+  | exp ADD exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::add, $3); }
+  | exp SUB exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::sub, $3); }
+  | exp MUL exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::mul, $3); }
+  | exp DIV exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::div, $3); }
   ;
 %%
 
