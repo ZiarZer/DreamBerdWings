@@ -9,8 +9,10 @@ namespace ast {
 
     PrettyPrinter(std::ostream& stream);
 
+    void operator()(const NullExp&) override;
     void operator()(const NumberExp& e) override;
     void operator()(const BinaryOpExp& e) override;
+    void operator()(const UndefinedExp&) override;
 
   protected:
     std::ostream& stream_;

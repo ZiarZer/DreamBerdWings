@@ -22,11 +22,13 @@ namespace parse {
 
     parse::location get_location() const;
 
+    ast::NullExp* make_NullExp(const parse::location& location) const;
     ast::NumberExp* make_NumberExp(const parse::location& location, float value) const;
     ast::BinaryOpExp* make_BinaryOpExp(const parse::location& location,
                                        ast::Exp* left,
                                        ast::BinaryOpExp::Oper operation,
                                        ast::Exp* right) const;
+    ast::UndefinedExp* make_UndefinedExp(const parse::location& location) const;
 
   private:
     DreamBerdScanner scanner_;

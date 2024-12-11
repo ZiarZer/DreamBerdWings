@@ -37,7 +37,9 @@
 %define api.token.prefix {TOKEN_}
 
 %token EOF 0 "EOF"
-%token EOL "EOL"
+       EOL "EOL"
+       NULL "null"
+       UNDEFINED "undefined"
 %token <float> NUMBER "number";
 %left ADD "+" SUB "-";
 %left MUL "*" DIV "/";
@@ -61,7 +63,9 @@ instructions:
   ;
 
 exp:
-    NUMBER { $$ = driver.make_NumberExp(@$, $1); }
+    "null" { $$ = driver.make_NullExp(@$); }
+  | "undefined" { $$ = driver.make_UndefinedExp(@$); }
+  | NUMBER { $$ = driver.make_NumberExp(@$, $1); }
   | exp ADD exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::add, $3); }
   | exp SUB exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::sub, $3); }
   | exp MUL exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::mul, $3); }

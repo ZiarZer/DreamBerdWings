@@ -6,6 +6,10 @@ namespace ast {
     : Visitor()
     , stream_(stream) {}
 
+  void PrettyPrinter::operator()(const NullExp&) {
+    stream_ << "null";
+  }
+
   void PrettyPrinter::operator()(const NumberExp& e) {
     stream_ << e.value_get();
   }
@@ -13,6 +17,10 @@ namespace ast {
     e.left_get()->accept(*this);
     stream_ << str(e.operation_get());
     e.right_get()->accept(*this);
+  }
+
+  void PrettyPrinter::operator()(const UndefinedExp&) {
+    stream_ << "undefined";
   }
 
   std::ostream& operator<<(std::ostream& stream, const Ast& tree) {

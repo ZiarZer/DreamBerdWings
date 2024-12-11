@@ -36,6 +36,12 @@ float           [0-9]*\.[0-9]+
 "/"         {
                 return parse::DreamBerdParser::make_DIV(driver_.get_location());
             }
+"null"      {
+                return parse::DreamBerdParser::make_NULL(driver_.get_location());
+            }
+"undefined" {
+                return parse::DreamBerdParser::make_UNDEFINED(driver_.get_location());
+            }
 \n          {
                 driver_.location_next_line();
                 return parse::DreamBerdParser::make_EOL(driver_.get_location());
