@@ -6,16 +6,16 @@
 namespace ast {
   class NumberExp : public Exp {
   public:
-    NumberExp(const Location& location, int value);
+    NumberExp(const Location& location, float value);
     NumberExp(const NumberExp&) = delete;
     NumberExp& operator=(const NumberExp&) = delete;
 
-    int value_get() const;
+    float value_get() const;
 
     void accept(Visitor& v) const override;
 
   protected:
-    int value_;
+    float value_;
   };
 } // namespace ast
 

@@ -1,7 +1,7 @@
 #include "number-exp.hh"
 
 namespace ast {
-  NumberExp::NumberExp(const Location& location, int value)
+  NumberExp::NumberExp(const Location& location, float value)
     : Exp(location)
     , value_(value) {}
 

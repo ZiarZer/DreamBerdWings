@@ -1,4 +1,5 @@
 %{
+    #include <sstream>
 	#include "dreamberd-driver.hh"
 
 	#define yyterminate() parse::DreamBerdParser::make_EOF(driver_.get_location());
@@ -12,11 +13,16 @@
 %option yyclass="DreamBerdScanner"
 %option prefix="DreamBerd_"
 
+int             [0-9]+\.?
+float           [0-9]*\.[0-9]+
+
 %%
 
-[0-9]+      {
-                uint64_t number = strtoull(yytext, 0, 10);
-                return parse::DreamBerdParser::make_INT(number, driver_.get_location());
+{int}|{float} {
+                float number;
+                std::istringstream stream(yytext);
+                stream >> number;
+                return parse::DreamBerdParser::make_NUMBER(number, driver_.get_location());
             }
 "+"         {
                 return parse::DreamBerdParser::make_ADD(driver_.get_location());

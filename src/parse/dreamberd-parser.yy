@@ -38,7 +38,7 @@
 
 %token EOF 0 "EOF"
 %token EOL "EOL"
-%token <uint64_t> INT "int";
+%token <float> NUMBER "number";
 %left ADD "+" SUB "-";
 %left MUL "*" DIV "/";
 
@@ -61,7 +61,7 @@ instructions:
   ;
 
 exp:
-    INT { $$ = driver.make_NumberExp(@$, $1); }
+    NUMBER { $$ = driver.make_NumberExp(@$, $1); }
   | exp ADD exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::add, $3); }
   | exp SUB exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::sub, $3); }
   | exp MUL exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::mul, $3); }
