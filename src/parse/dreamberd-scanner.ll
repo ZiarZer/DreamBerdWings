@@ -28,7 +28,8 @@ float           [0-9]*\.[0-9]+
                 return parse::DreamBerdParser::make_BANGS(yyleng, driver_.get_location());
             }
 "¡"+        {
-                return parse::DreamBerdParser::make_BANGS(-yyleng, driver_.get_location());
+                // Division by 2 because the unbang char is 2 bytes long (unicode)
+                return parse::DreamBerdParser::make_BANGS(-yyleng / 2, driver_.get_location());
             }
 "?"+        {
                 return parse::DreamBerdParser::make_QUESTIONS(yyleng, driver_.get_location());
@@ -53,7 +54,7 @@ float           [0-9]*\.[0-9]+
             }
 \n          {
                 driver_.location_next_line();
-                return parse::DreamBerdParser::make_EOL(driver_.get_location());
+                // return parse::DreamBerdParser::make_EOL(driver_.get_location());
             }
 [\t ]       {
                 // TMP: Ignore whitespaces

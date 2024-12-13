@@ -45,7 +45,9 @@
 %left ADD "+" SUB "-";
 %left MUL "*" DIV "/";
 
-%type <ast::Exp*> exp instruction instructions;
+%type <ast::Exp*> exp
+%type <ast::Statement*> statement;
+%type <std::vector<ast::Statement*>> statements statements.1;
 %type <ast::Punctuation*> punctuation;
 %type <int> BANGS QUESTIONS
 
@@ -53,16 +55,19 @@
 
 %%
 
-program: instructions EOF { driver.ast_ = $1; return 0; }
+program: statements EOF { driver.ast_ = $1; return 0; }
 
-instruction:
-    exp punctuation { std::cout << "Parsed AST: " << *$1<< std::endl << "> "; $$ = $1; }
-  | EOL { std::cout << std::endl << "> "; $$ = 0; }
+statement:
+    exp punctuation { $$ = driver.make_ExpStatement(@$, $1, $2); }
   ;
 
-instructions:
-    instruction { $$ = $1; }
-  | instructions instruction { $1; $$ = $2; }
+statements:
+    %empty { $$ = driver.make_statements(); }
+  | statements.1 { $$ = $1; }
+  ;
+statements.1:
+    statement { $$ = driver.make_statements($1); }
+  | statements.1 statement { $$ = $1; $$->push_back($2); }
   ;
 
 punctuation:

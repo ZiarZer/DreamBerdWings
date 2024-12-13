@@ -3,6 +3,10 @@
 #include "dreamberd-driver.hh"
 
 namespace parse {
+  inline ast::Ast* DreamBerdDriver::ast_get() const {
+    return ast_;
+  }
+
   inline ast::NullExp* DreamBerdDriver::make_NullExp(const parse::location& location) const {
     return new ast::NullExp(location);
   }
@@ -25,5 +29,11 @@ namespace parse {
   inline ast::Punctuation*
   DreamBerdDriver::make_Punctuation(const parse::location& location, char type, int count) const {
     return new ast::Punctuation(location, type, count);
+  }
+
+  inline ast::ExpInstruction* DreamBerdDriver::make_ExpInstruction(const parse::location& location,
+                                                                   ast::Exp* expression,
+                                                                   ast::Punctuation* punctuation) const {
+    return new ast::ExpInstruction(location, expression, punctuation);
   }
 } // namespace parse

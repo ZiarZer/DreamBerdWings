@@ -19,13 +19,20 @@ namespace ast {
     e.right_get()->accept(*this);
   }
 
+  void PrettyPrinter::operator()(const ExpInstruction& e) {
+    e.expression_get()->accept(*this);
+    e.punctuation_get()->accept(*this);
+  }
+
   void PrettyPrinter::operator()(const UndefinedExp&) {
     stream_ << "undefined";
   }
 
   void PrettyPrinter::operator()(const Punctuation& e) {
     if (e.type_get() == '!' && e.count_get() < 0) {
-      stream_ << std::string(-e.count_get(), u'¡');
+      for (int i = 0; i > e.count_get(); i--) {
+        stream_ << "¡";
+      }
     } else {
       stream_ << std::string(e.count_get(), e.type_get());
     }

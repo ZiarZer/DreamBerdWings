@@ -8,6 +8,8 @@ namespace ast {
   class BinaryOpExp;
   class Punctuation;
   class UndefinedExp;
+  class Statement;
+  class ExpStatement;
 
   class Visitor;
 } // namespace ast

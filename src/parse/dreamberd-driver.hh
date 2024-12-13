@@ -12,6 +12,7 @@ namespace parse {
     * \returns result of the parsed operation.
     */
     int parse();
+    ast::Ast* ast_get() const;
 
     friend class DreamBerdScanner;
     friend class DreamBerdParser;
@@ -30,12 +31,14 @@ namespace parse {
                                        ast::Exp* right) const;
     ast::UndefinedExp* make_UndefinedExp(const parse::location& location) const;
     ast::Punctuation* make_Punctuation(const parse::location& location, char type, int count) const;
+    ast::ExpInstruction*
+    make_ExpInstruction(const parse::location& location, ast::Exp* expression, ast::Punctuation* punctuation) const;
 
   private:
     DreamBerdScanner scanner_;
     DreamBerdParser parser_;
     parse::location location_;
-    ast::Exp* ast_;
+    ast::Ast* ast_;
   };
 
 } // namespace parse
