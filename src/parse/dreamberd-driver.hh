@@ -29,6 +29,7 @@ namespace parse {
                                        ast::BinaryOpExp::Oper operation,
                                        ast::Exp* right) const;
     ast::UndefinedExp* make_UndefinedExp(const parse::location& location) const;
+    ast::Punctuation* make_Punctuation(const parse::location& location, char type, int count) const;
 
   private:
     DreamBerdScanner scanner_;

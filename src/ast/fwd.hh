@@ -6,6 +6,7 @@ namespace ast {
   class NullExp;
   class NumberExp;
   class BinaryOpExp;
+  class Punctuation;
   class UndefinedExp;
 
   class Visitor;

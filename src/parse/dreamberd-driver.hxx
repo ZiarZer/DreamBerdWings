@@ -21,4 +21,9 @@ namespace parse {
   inline ast::UndefinedExp* DreamBerdDriver::make_UndefinedExp(const parse::location& location) const {
     return new ast::UndefinedExp(location);
   }
+
+  inline ast::Punctuation*
+  DreamBerdDriver::make_Punctuation(const parse::location& location, char type, int count) const {
+    return new ast::Punctuation(location, type, count);
+  }
 } // namespace parse

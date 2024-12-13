@@ -12,6 +12,7 @@ namespace ast {
     virtual void operator()(const NumberExp&) = 0;
     virtual void operator()(const BinaryOpExp&) = 0;
     virtual void operator()(const UndefinedExp&) = 0;
+    virtual void operator()(const Punctuation&) = 0;
     template <typename E> void accept(E* e);
     template <class E> void operator()(E* e);
   };

@@ -13,6 +13,7 @@ namespace ast {
     void operator()(const NumberExp& e) override;
     void operator()(const BinaryOpExp& e) override;
     void operator()(const UndefinedExp&) override;
+    void operator()(const Punctuation& e) override;
 
   protected:
     std::ostream& stream_;

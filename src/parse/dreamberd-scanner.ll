@@ -24,6 +24,15 @@ float           [0-9]*\.[0-9]+
                 stream >> number;
                 return parse::DreamBerdParser::make_NUMBER(number, driver_.get_location());
             }
+"!"+        {
+                return parse::DreamBerdParser::make_BANGS(yyleng, driver_.get_location());
+            }
+"¡"+        {
+                return parse::DreamBerdParser::make_BANGS(-yyleng, driver_.get_location());
+            }
+"?"+        {
+                return parse::DreamBerdParser::make_QUESTIONS(yyleng, driver_.get_location());
+            }
 "+"         {
                 return parse::DreamBerdParser::make_ADD(driver_.get_location());
             }

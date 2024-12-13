@@ -41,10 +41,13 @@
        NULL "null"
        UNDEFINED "undefined"
 %token <float> NUMBER "number";
+%token BANGS QUESTIONS
 %left ADD "+" SUB "-";
 %left MUL "*" DIV "/";
 
 %type <ast::Exp*> exp instruction instructions;
+%type <ast::Punctuation*> punctuation;
+%type <int> BANGS QUESTIONS
 
 %start program
 
@@ -53,13 +56,18 @@
 program: instructions EOF { driver.ast_ = $1; return 0; }
 
 instruction:
-    exp EOL { std::cout << "Parsed AST: " << *$1<< std::endl << "> "; $$ = $1; }
+    exp punctuation { std::cout << "Parsed AST: " << *$1<< std::endl << "> "; $$ = $1; }
   | EOL { std::cout << std::endl << "> "; $$ = 0; }
   ;
 
 instructions:
     instruction { $$ = $1; }
   | instructions instruction { $1; $$ = $2; }
+  ;
+
+punctuation:
+    BANGS { $$ = driver.make_Punctuation(@$, '!', $1); }
+  | QUESTIONS { $$ = driver.make_Punctuation(@$, '?', $1); }
   ;
 
 exp:

@@ -23,6 +23,14 @@ namespace ast {
     stream_ << "undefined";
   }
 
+  void PrettyPrinter::operator()(const Punctuation& e) {
+    if (e.type_get() == '!' && e.count_get() < 0) {
+      stream_ << std::string(-e.count_get(), u'¡');
+    } else {
+      stream_ << std::string(e.count_get(), e.type_get());
+    }
+  }
+
   std::ostream& operator<<(std::ostream& stream, const Ast& tree) {
     PrettyPrinter print(stream);
     print(tree);
