@@ -11,6 +11,7 @@
 #include "null-exp.hh"
 #include "number-exp.hh"
 #include "punctuation.hh"
+#include "return-statement.hh"
 #include "statement.hh"
 #include "undefined-exp.hh"
 #include "while-statement.hh"
