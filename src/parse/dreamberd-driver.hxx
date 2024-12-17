@@ -32,8 +32,8 @@ namespace parse {
   }
 
   inline ast::ExpStatement* DreamBerdDriver::make_ExpStatement(const parse::location& location,
-                                                                    ast::Exp* expression,
-                                                                    ast::Punctuation* punctuation) const {
+                                                               ast::Exp* expression,
+                                                               ast::Punctuation* punctuation) const {
     return new ast::ExpStatement(location, expression, punctuation);
   }
 

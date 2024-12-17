@@ -2,6 +2,8 @@
 #include "all.hh"
 
 namespace ast {
+  int PrettyPrinter::indent_level = 0;
+
   PrettyPrinter::PrettyPrinter(std::ostream& stream)
     : Visitor()
     , stream_(stream) {}
@@ -22,15 +24,15 @@ namespace ast {
   void PrettyPrinter::operator()(const ExpStatement& e) {
     e.expression_get()->accept(*this);
     e.punctuation_get()->accept(*this);
-    stream_ << "\n";
   }
 
   void PrettyPrinter::operator()(const CompoundStatement& e) {
-    stream_ << "{\n";
+    stream_ << "{" << indent;
     for (Statement* statement : *(e.statements_get())) {
+      stream_ << iendl;
       statement->accept(*this);
     }
-    stream_ << "}" << std::endl;
+    stream_ << unindent << iendl << "}";
   }
 
   void PrettyPrinter::operator()(const UndefinedExp&) {
@@ -51,5 +53,23 @@ namespace ast {
     PrettyPrinter print(stream);
     print(tree);
     return stream;
+  }
+
+  std::ostream& indent(std::ostream& o) {
+    PrettyPrinter::indent_level += 1;
+    return o;
+  }
+
+  std::ostream& unindent(std::ostream& o) {
+    PrettyPrinter::indent_level -= 1;
+    return o;
+  }
+
+  std::ostream& iendl(std::ostream& o) {
+    o << std::endl;
+    for (int i = 0; i < PrettyPrinter::indent_level; i++) {
+      o << "  ";
+    }
+    return o;
   }
 } // namespace ast
