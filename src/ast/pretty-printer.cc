@@ -46,6 +46,20 @@ namespace ast {
     stream_ << "while (" << *(e.condition_get()) << ") " << *(e.body_get());
   }
 
+  void PrettyPrinter::operator()(const BreakStatement& e) {
+    stream_ << "break" << *(e.punctuation_get());
+  }
+
+  void PrettyPrinter::operator()(const ContinueStatement& e) {
+    stream_ << "continue" << *(e.punctuation_get());
+  }
+
+  void PrettyPrinter::operator()(const ReturnStatement& e) {
+    stream_ << "return ";
+    e.expression_get()->accept(*this);
+    e.punctuation_get()->accept(*this);
+  }
+
   void PrettyPrinter::operator()(const UndefinedExp&) {
     stream_ << "undefined";
   }
