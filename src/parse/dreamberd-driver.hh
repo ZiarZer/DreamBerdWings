@@ -45,7 +45,10 @@ namespace parse {
     ast::WhileStatement*
     make_WhileStatement(const parse::location& location, ast::Exp* condition, ast::Statement* body) const;
     ast::BreakStatement* make_BreakStatement(const parse::location& location, ast::Punctuation* punctuation) const;
-    ast::ContinueStatement* make_ContinueStatement(const parse::location& location, ast::Punctuation* punctuation) const;
+    ast::ContinueStatement* make_ContinueStatement(const parse::location& location,
+                                                   ast::Punctuation* punctuation) const;
+    ast::ReturnStatement*
+    make_ReturnStatement(const parse::location& location, ast::Exp* expression, ast::Punctuation* punctuation) const;
 
     template <class... T> std::vector<ast::Statement*>* make_statements(T... statements) const;
 

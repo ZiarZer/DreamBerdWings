@@ -45,6 +45,7 @@
        WHILE "while"
        BREAK "break"
        CONTINUE "continue"
+       RETURN "return"
        LPAREN "("
        RPAREN ")"
 %precedence RPAREN
@@ -73,6 +74,7 @@ statement:
   | WHILE "(" exp ")" statement { $$ = driver.make_WhileStatement(@$, $3, $5); }
   | BREAK punctuation { $$ = driver.make_BreakStatement(@$, $2); }
   | CONTINUE punctuation { $$ = driver.make_ContinueStatement(@$, $2); }
+  | RETURN exp punctuation { $$ = driver.make_ReturnStatement(@$, $2, $3); }
   ;
 
 statements:

@@ -68,8 +68,14 @@ namespace parse {
   }
 
   inline ast::ContinueStatement* DreamBerdDriver::make_ContinueStatement(const parse::location& location,
-                                                                   ast::Punctuation* punctuation) const {
+                                                                         ast::Punctuation* punctuation) const {
     return new ast::ContinueStatement(location, punctuation);
+  }
+
+  inline ast::ReturnStatement* DreamBerdDriver::make_ReturnStatement(const parse::location& location,
+                                                                     ast::Exp* expression,
+                                                                     ast::Punctuation* punctuation) const {
+    return new ast::ReturnStatement(location, expression, punctuation);
   }
 
   template <class... T> inline std::vector<ast::Statement*>* DreamBerdDriver::make_statements(T... statements) const {
