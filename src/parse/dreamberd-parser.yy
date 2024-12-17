@@ -43,6 +43,8 @@
        IF "if"
        ELSE "else"
        WHILE "while"
+       BREAK "break"
+       CONTINUE "continue"
        LPAREN "("
        RPAREN ")"
 %precedence RPAREN
@@ -69,6 +71,8 @@ statement:
   | IF "(" exp ")" statement ELSE statement { $$ = driver.make_IfStatement(@$, $3, $5, $7); }
   | IF "(" exp ")" statement { $$ = driver.make_IfStatement(@$, $3, $5); }
   | WHILE "(" exp ")" statement { $$ = driver.make_WhileStatement(@$, $3, $5); }
+  | BREAK punctuation { $$ = driver.make_BreakStatement(@$, $2); }
+  | CONTINUE punctuation { $$ = driver.make_ContinueStatement(@$, $2); }
   ;
 
 statements:

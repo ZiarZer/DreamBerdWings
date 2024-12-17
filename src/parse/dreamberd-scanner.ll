@@ -67,6 +67,12 @@ float           [0-9]*\.[0-9]+
 "while"     {
                 return parse::DreamBerdParser::make_WHILE(driver_.get_location());
             }
+"break"     {
+                return parse::DreamBerdParser::make_BREAK(driver_.get_location());
+            }
+"continue"  {
+                return parse::DreamBerdParser::make_CONTINUE(driver_.get_location());
+            }
 \n          {
                 driver_.location_next_line();
                 // return parse::DreamBerdParser::make_EOL(driver_.get_location());
