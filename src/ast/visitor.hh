@@ -15,6 +15,8 @@ namespace ast {
     virtual void operator()(const Punctuation&) = 0;
     virtual void operator()(const ExpStatement&) = 0;
     virtual void operator()(const CompoundStatement&) = 0;
+    virtual void operator()(const IfStatement&) = 0;
+    virtual void operator()(const WhileStatement&) = 0;
     template <typename E> void accept(E* e);
     template <class E> void operator()(E* e);
   };

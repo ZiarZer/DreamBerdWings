@@ -35,6 +35,17 @@ namespace ast {
     stream_ << unindent << iendl << "}";
   }
 
+  void PrettyPrinter::operator()(const IfStatement& e) {
+    stream_ << "if (" << *(e.condition_get()) << ") " << *(e.then_clause_get());
+    if (e.else_clause_get()) {
+      stream_ << "else" << *(e.else_clause_get());
+    }
+  }
+
+  void PrettyPrinter::operator()(const WhileStatement& e) {
+    stream_ << "while (" << *(e.condition_get()) << ") " << *(e.body_get());
+  }
+
   void PrettyPrinter::operator()(const UndefinedExp&) {
     stream_ << "undefined";
   }

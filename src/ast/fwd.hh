@@ -11,6 +11,8 @@ namespace ast {
   class Statement;
   class ExpStatement;
   class CompoundStatement;
+  class IfStatement;
+  class WhileStatement;
 
   class Visitor;
 } // namespace ast
