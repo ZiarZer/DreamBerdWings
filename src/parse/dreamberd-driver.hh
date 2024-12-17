@@ -49,6 +49,7 @@ namespace parse {
                                                    ast::Punctuation* punctuation) const;
     ast::ReturnStatement*
     make_ReturnStatement(const parse::location& location, ast::Exp* expression, ast::Punctuation* punctuation) const;
+    ast::EmptyStatement* make_EmptyStatement(const parse::location& location, ast::Punctuation* punctuation) const;
 
     template <class... T> std::vector<ast::Statement*>* make_statements(T... statements) const;
 

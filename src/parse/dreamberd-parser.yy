@@ -75,6 +75,7 @@ statement:
   | BREAK punctuation { $$ = driver.make_BreakStatement(@$, $2); }
   | CONTINUE punctuation { $$ = driver.make_ContinueStatement(@$, $2); }
   | RETURN exp punctuation { $$ = driver.make_ReturnStatement(@$, $2, $3); }
+  | punctuation { $$ = driver.make_EmptyStatement(@$, $1); }
   ;
 
 statements:

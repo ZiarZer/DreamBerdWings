@@ -78,6 +78,11 @@ namespace parse {
     return new ast::ReturnStatement(location, expression, punctuation);
   }
 
+  inline ast::EmptyStatement* DreamBerdDriver::make_EmptyStatement(const parse::location& location,
+                                                                   ast::Punctuation* punctuation) const {
+    return new ast::EmptyStatement(location, punctuation);
+  }
+
   template <class... T> inline std::vector<ast::Statement*>* DreamBerdDriver::make_statements(T... statements) const {
     return new std::vector<ast::Statement*>{statements...};
   }
