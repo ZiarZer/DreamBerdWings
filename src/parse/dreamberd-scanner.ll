@@ -46,11 +46,26 @@ float           [0-9]*\.[0-9]+
 "/"         {
                 return parse::DreamBerdParser::make_DIV(driver_.get_location());
             }
+"("         {
+                return parse::DreamBerdParser::make_LPAREN(driver_.get_location());
+            }
+")"         {
+                return parse::DreamBerdParser::make_RPAREN(driver_.get_location());
+            }
 "null"      {
                 return parse::DreamBerdParser::make_NULL(driver_.get_location());
             }
 "undefined" {
                 return parse::DreamBerdParser::make_UNDEFINED(driver_.get_location());
+            }
+"if"        {
+                return parse::DreamBerdParser::make_IF(driver_.get_location());
+            }
+"else"      {
+                return parse::DreamBerdParser::make_ELSE(driver_.get_location());
+            }
+"while"     {
+                return parse::DreamBerdParser::make_WHILE(driver_.get_location());
             }
 \n          {
                 driver_.location_next_line();

@@ -35,6 +35,16 @@ namespace parse {
     make_ExpStatement(const parse::location& location, ast::Exp* expression, ast::Punctuation* punctuation) const;
     ast::CompoundStatement* make_CompoundStatement(const parse::location& location,
                                                    std::vector<ast::Statement*>* statements) const;
+
+    ast::IfStatement* make_IfStatement(const parse::location& location,
+                                       ast::Exp* condition,
+                                       ast::Statement* then_clause,
+                                       ast::Statement* else_clause) const;
+    ast::IfStatement*
+    make_IfStatement(const parse::location& location, ast::Exp* condition, ast::Statement* then_clause) const;
+    ast::WhileStatement*
+    make_WhileStatement(const parse::location& location, ast::Exp* condition, ast::Statement* body) const;
+
     template <class... T> std::vector<ast::Statement*>* make_statements(T... statements) const;
 
   private:

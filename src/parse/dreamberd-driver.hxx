@@ -43,6 +43,25 @@ namespace parse {
     return new ast::CompoundStatement(location, statements);
   }
 
+  inline ast::IfStatement* DreamBerdDriver::make_IfStatement(const parse::location& location,
+                                                             ast::Exp* condition,
+                                                             ast::Statement* then_clause,
+                                                             ast::Statement* else_clause) const {
+    return new ast::IfStatement(location, condition, then_clause, else_clause);
+  }
+
+  inline ast::IfStatement* DreamBerdDriver::make_IfStatement(const parse::location& location,
+                                                             ast::Exp* condition,
+                                                             ast::Statement* then_clause) const {
+    return new ast::IfStatement(location, condition, then_clause, nullptr);
+  }
+
+  inline ast::WhileStatement* DreamBerdDriver::make_WhileStatement(const parse::location& location,
+                                                                   ast::Exp* condition,
+                                                                   ast::Statement* body) const {
+    return new ast::WhileStatement(location, condition, body);
+  }
+
   template <class... T> inline std::vector<ast::Statement*>* DreamBerdDriver::make_statements(T... statements) const {
     return new std::vector<ast::Statement*>{statements...};
   }

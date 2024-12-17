@@ -40,6 +40,13 @@
        EOL "EOL"
        NULL "null"
        UNDEFINED "undefined"
+       IF "if"
+       ELSE "else"
+       WHILE "while"
+       LPAREN "("
+       RPAREN ")"
+%precedence RPAREN
+%precedence ELSE
 %token <float> NUMBER "number";
 %token BANGS QUESTIONS
 %left ADD "+" SUB "-";
@@ -59,6 +66,9 @@ program: statements EOF { driver.ast_ = driver.make_CompoundStatement(@$, $1); r
 
 statement:
     exp punctuation { $$ = driver.make_ExpStatement(@$, $1, $2); }
+  | IF "(" exp ")" statement ELSE statement { $$ = driver.make_IfStatement(@$, $3, $5, $7); }
+  | IF "(" exp ")" statement { $$ = driver.make_IfStatement(@$, $3, $5); }
+  | WHILE "(" exp ")" statement { $$ = driver.make_WhileStatement(@$, $3, $5); }
   ;
 
 statements:

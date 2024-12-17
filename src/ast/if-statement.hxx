@@ -7,11 +7,11 @@ namespace ast {
     return condition_;
   }
 
-  inline Exp* IfStatement::then_clause_get() const {
+  inline Statement* IfStatement::then_clause_get() const {
     return then_clause_;
   }
 
-  inline Exp* IfStatement::else_clause_get() const {
+  inline Statement* IfStatement::else_clause_get() const {
     return else_clause_;
   }
 } // namespace ast

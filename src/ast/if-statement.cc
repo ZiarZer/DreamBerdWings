@@ -1,7 +1,7 @@
 #include "if-statement.hh"
 
 namespace ast {
-  IfStatement::IfStatement(const Location& location, Exp* condition, Exp* then_clause, Exp* else_clause)
+  IfStatement::IfStatement(const Location& location, Exp* condition, Statement* then_clause, Statement* else_clause)
     : Statement(location)
     , condition_(condition)
     , then_clause_(then_clause)
