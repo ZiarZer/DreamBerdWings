@@ -13,6 +13,8 @@ namespace ast {
   class CompoundStatement;
   class IfStatement;
   class WhileStatement;
+  class BreakStatement;
+  class ContinueStatement;
 
   class Visitor;
 } // namespace ast
