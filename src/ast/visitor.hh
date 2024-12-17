@@ -20,6 +20,7 @@ namespace ast {
     virtual void operator()(const BreakStatement&) = 0;
     virtual void operator()(const ContinueStatement&) = 0;
     virtual void operator()(const ReturnStatement&) = 0;
+    virtual void operator()(const EmptyStatement&) = 0;
     template <typename E> void accept(E* e);
     template <class E> void operator()(E* e);
   };

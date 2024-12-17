@@ -16,6 +16,7 @@ namespace ast {
   class BreakStatement;
   class ContinueStatement;
   class ReturnStatement;
+  class EmptyStatement;
 
   class Visitor;
 } // namespace ast

@@ -60,6 +60,10 @@ namespace ast {
     e.punctuation_get()->accept(*this);
   }
 
+  void PrettyPrinter::operator()(const EmptyStatement& e) {
+    e.punctuation_get()->accept(*this);
+  }
+
   void PrettyPrinter::operator()(const UndefinedExp&) {
     stream_ << "undefined";
   }
