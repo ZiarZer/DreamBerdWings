@@ -19,7 +19,7 @@ namespace ast {
     e.right_get()->accept(*this);
   }
 
-  void PrettyPrinter::operator()(const ExpInstruction& e) {
+  void PrettyPrinter::operator()(const ExpStatement& e) {
     e.expression_get()->accept(*this);
     e.punctuation_get()->accept(*this);
     stream_ << "\n";

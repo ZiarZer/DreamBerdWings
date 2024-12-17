@@ -31,6 +31,8 @@ namespace parse {
                                        ast::Exp* right) const;
     ast::UndefinedExp* make_UndefinedExp(const parse::location& location) const;
     ast::Punctuation* make_Punctuation(const parse::location& location, char type, int count) const;
+    ast::ExpStatement*
+    make_ExpStatement(const parse::location& location, ast::Exp* expression, ast::Punctuation* punctuation) const;
     ast::CompoundStatement* make_CompoundStatement(const parse::location& location,
                                                    std::vector<ast::Statement*>* statements) const;
     template <class... T> std::vector<ast::Statement*>* make_statements(T... statements) const;

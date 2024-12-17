@@ -4,7 +4,7 @@
 #include "visitor.hh"
 
 namespace ast {
-  class ExpStatement : public Instruction {
+  class ExpStatement : public Statement {
   public:
     ExpStatement(const Location& location, Exp* expression, Punctuation* punctuation);
     ExpStatement(const ExpStatement&) = delete;
