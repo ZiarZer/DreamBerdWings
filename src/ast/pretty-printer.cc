@@ -22,6 +22,15 @@ namespace ast {
   void PrettyPrinter::operator()(const ExpInstruction& e) {
     e.expression_get()->accept(*this);
     e.punctuation_get()->accept(*this);
+    stream_ << "\n";
+  }
+
+  void PrettyPrinter::operator()(const CompoundStatement& e) {
+    stream_ << "{\n";
+    for (Statement* statement : *(e.statements_get())) {
+      statement->accept(*this);
+    }
+    stream_ << "}" << std::endl;
   }
 
   void PrettyPrinter::operator()(const UndefinedExp&) {

@@ -10,6 +10,7 @@ namespace ast {
   class UndefinedExp;
   class Statement;
   class ExpStatement;
+  class CompoundStatement;
 
   class Visitor;
 } // namespace ast

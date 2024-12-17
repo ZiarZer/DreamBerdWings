@@ -31,9 +31,13 @@ namespace parse {
     return new ast::Punctuation(location, type, count);
   }
 
-  inline ast::ExpInstruction* DreamBerdDriver::make_ExpInstruction(const parse::location& location,
-                                                                   ast::Exp* expression,
-                                                                   ast::Punctuation* punctuation) const {
-    return new ast::ExpInstruction(location, expression, punctuation);
+  inline ast::CompoundStatement*
+  DreamBerdDriver::make_CompoundStatement(const parse::location& location,
+                                          std::vector<ast::Statement*>* statements) const {
+    return new ast::CompoundStatement(location, statements);
+  }
+
+  template <class... T> inline std::vector<ast::Statement*>* DreamBerdDriver::make_statements(T... statements) const {
+    return new std::vector<ast::Statement*>{statements...};
   }
 } // namespace parse

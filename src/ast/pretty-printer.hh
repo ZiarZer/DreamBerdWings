@@ -14,7 +14,7 @@ namespace ast {
     void operator()(const BinaryOpExp& e) override;
     void operator()(const UndefinedExp&) override;
     void operator()(const Punctuation& e) override;
-    void operator()(const ExpInstruction& e) override;
+    void operator()(const CompoundStatement& e) override;
 
   protected:
     std::ostream& stream_;

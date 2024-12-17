@@ -2,6 +2,7 @@
 
 #include "ast.hh"
 #include "binary-op-exp.hh"
+#include "compound-statement.hh"
 #include "exp-statement.hh"
 #include "exp.hh"
 #include "null-exp.hh"

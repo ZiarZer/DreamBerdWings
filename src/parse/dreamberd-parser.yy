@@ -47,7 +47,7 @@
 
 %type <ast::Exp*> exp
 %type <ast::Statement*> statement;
-%type <std::vector<ast::Statement*>> statements statements.1;
+%type <std::vector<ast::Statement*>*> statements statements.1;
 %type <ast::Punctuation*> punctuation;
 %type <int> BANGS QUESTIONS
 
@@ -55,7 +55,7 @@
 
 %%
 
-program: statements EOF { driver.ast_ = $1; return 0; }
+program: statements EOF { driver.ast_ = driver.make_CompoundStatement(@$, $1); return 0; }
 
 statement:
     exp punctuation { $$ = driver.make_ExpStatement(@$, $1, $2); }
