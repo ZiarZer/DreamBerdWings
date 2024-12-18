@@ -5,6 +5,7 @@ namespace ast {
   class Exp;
   class NullExp;
   class NumberExp;
+  class AwaitExp;
   class BinaryOpExp;
   class Punctuation;
   class UndefinedExp;

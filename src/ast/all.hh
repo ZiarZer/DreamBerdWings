@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ast.hh"
+#include "await-exp.hh"
 #include "binary-op-exp.hh"
 #include "break-statement.hh"
 #include "compound-statement.hh"
