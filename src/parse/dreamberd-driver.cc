@@ -9,7 +9,6 @@ DreamBerdDriver::DreamBerdDriver()
   , ast_(nullptr) {}
 
 int DreamBerdDriver::parse() {
-  std::cout << "> ";
   return parser_.parse();
 }
 

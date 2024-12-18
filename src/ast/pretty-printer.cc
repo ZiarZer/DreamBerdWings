@@ -27,12 +27,18 @@ namespace ast {
   }
 
   void PrettyPrinter::operator()(const CompoundStatement& e) {
-    stream_ << "{" << indent;
+    if (e.is_root_get()) {
+      stream_ << "{" << indent;
+    } else {
+      stream_ << "/* Parsed AST: */";
+    }
     for (Statement* statement : *(e.statements_get())) {
       stream_ << iendl;
       statement->accept(*this);
     }
-    stream_ << unindent << iendl << "}";
+    if (e.is_root_get()) {
+      stream_ << unindent << iendl << "}";
+    }
   }
 
   void PrettyPrinter::operator()(const IfStatement& e) {
