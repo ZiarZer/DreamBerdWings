@@ -24,6 +24,7 @@ namespace ast {
     void operator()(const ContinueStatement& e) override;
     void operator()(const ReturnStatement& e) override;
     void operator()(const EmptyStatement& e) override;
+    void operator()(const VariableDec& e) override;
 
   protected:
     std::ostream& stream_;

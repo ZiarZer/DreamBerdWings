@@ -18,6 +18,7 @@ namespace ast {
   class ContinueStatement;
   class ReturnStatement;
   class EmptyStatement;
+  class VariableDec;
 
   class Visitor;
 } // namespace ast

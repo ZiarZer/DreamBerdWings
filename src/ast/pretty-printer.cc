@@ -74,6 +74,17 @@ namespace ast {
     stream_ << "undefined";
   }
 
+  void PrettyPrinter::operator()(const VariableDec& e) {
+    stream_ << (e.reassignable_get() ? "var " : "const ");
+    stream_ << (e.editable_get() ? "var " : "const ");
+    stream_ << e.name_get();
+    Exp* init = e.init_get();
+    if (init) {
+      stream_ << " = ";
+      init->accept(*this);
+    }
+  }
+
   void PrettyPrinter::operator()(const Punctuation& e) {
     if (e.type_get() == '!' && e.count_get() < 0) {
       for (int i = 0; i > e.count_get(); i--) {

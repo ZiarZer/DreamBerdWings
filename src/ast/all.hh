@@ -16,4 +16,5 @@
 #include "return-statement.hh"
 #include "statement.hh"
 #include "undefined-exp.hh"
+#include "variable-dec.hh"
 #include "when-statement.hh"
