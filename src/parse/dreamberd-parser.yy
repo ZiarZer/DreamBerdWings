@@ -42,7 +42,7 @@
        UNDEFINED "undefined"
        IF "if"
        ELSE "else"
-       WHILE "while"
+       WHEN "when"
        BREAK "break"
        CONTINUE "continue"
        RETURN "return"
@@ -71,7 +71,7 @@ statement:
     exp punctuation { $$ = driver.make_ExpStatement(@$, $1, $2); }
   | IF "(" exp ")" statement ELSE statement { $$ = driver.make_IfStatement(@$, $3, $5, $7); }
   | IF "(" exp ")" statement { $$ = driver.make_IfStatement(@$, $3, $5); }
-  | WHILE "(" exp ")" statement { $$ = driver.make_WhileStatement(@$, $3, $5); }
+  | WHEN "(" exp ")" statement { $$ = driver.make_WhenStatement(@$, $3, $5); }
   | BREAK punctuation { $$ = driver.make_BreakStatement(@$, $2); }
   | CONTINUE punctuation { $$ = driver.make_ContinueStatement(@$, $2); }
   | RETURN exp punctuation { $$ = driver.make_ReturnStatement(@$, $2, $3); }

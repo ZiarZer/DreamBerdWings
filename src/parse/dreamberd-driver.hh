@@ -42,8 +42,8 @@ namespace parse {
                                        ast::Statement* else_clause) const;
     ast::IfStatement*
     make_IfStatement(const parse::location& location, ast::Exp* condition, ast::Statement* then_clause) const;
-    ast::WhileStatement*
-    make_WhileStatement(const parse::location& location, ast::Exp* condition, ast::Statement* body) const;
+    ast::WhenStatement*
+    make_WhenStatement(const parse::location& location, ast::Exp* condition, ast::Statement* body) const;
     ast::BreakStatement* make_BreakStatement(const parse::location& location, ast::Punctuation* punctuation) const;
     ast::ContinueStatement* make_ContinueStatement(const parse::location& location,
                                                    ast::Punctuation* punctuation) const;

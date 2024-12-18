@@ -4,11 +4,11 @@
 #include "visitor.hh"
 
 namespace ast {
-  class WhileStatement : public Statement {
+  class WhenStatement : public Statement {
   public:
-    WhileStatement(const Location& location, Exp* condition, Statement* body);
-    WhileStatement(const WhileStatement&) = delete;
-    WhileStatement& operator=(const WhileStatement&) = delete;
+    WhenStatement(const Location& location, Exp* condition, Statement* body);
+    WhenStatement(const WhenStatement&) = delete;
+    WhenStatement& operator=(const WhenStatement&) = delete;
 
     Exp* condition_get() const;
     Statement* body_get() const;
@@ -21,4 +21,4 @@ namespace ast {
   };
 } // namespace ast
 
-#include "while-statement.hxx"
+#include "when-statement.hxx"

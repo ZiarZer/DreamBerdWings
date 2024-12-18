@@ -64,8 +64,8 @@ float           [0-9]*\.[0-9]+
 "else"      {
                 return parse::DreamBerdParser::make_ELSE(driver_.get_location());
             }
-"while"     {
-                return parse::DreamBerdParser::make_WHILE(driver_.get_location());
+"when"     {
+                return parse::DreamBerdParser::make_WHEN(driver_.get_location());
             }
 "break"     {
                 return parse::DreamBerdParser::make_BREAK(driver_.get_location());

@@ -12,7 +12,7 @@ namespace ast {
   class ExpStatement;
   class CompoundStatement;
   class IfStatement;
-  class WhileStatement;
+  class WhenStatement;
   class BreakStatement;
   class ContinueStatement;
   class ReturnStatement;

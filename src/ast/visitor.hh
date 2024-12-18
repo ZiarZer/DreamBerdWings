@@ -16,7 +16,7 @@ namespace ast {
     virtual void operator()(const ExpStatement&) = 0;
     virtual void operator()(const CompoundStatement&) = 0;
     virtual void operator()(const IfStatement&) = 0;
-    virtual void operator()(const WhileStatement&) = 0;
+    virtual void operator()(const WhenStatement&) = 0;
     virtual void operator()(const BreakStatement&) = 0;
     virtual void operator()(const ContinueStatement&) = 0;
     virtual void operator()(const ReturnStatement&) = 0;

@@ -56,10 +56,10 @@ namespace parse {
     return new ast::IfStatement(location, condition, then_clause, nullptr);
   }
 
-  inline ast::WhileStatement* DreamBerdDriver::make_WhileStatement(const parse::location& location,
-                                                                   ast::Exp* condition,
-                                                                   ast::Statement* body) const {
-    return new ast::WhileStatement(location, condition, body);
+  inline ast::WhenStatement* DreamBerdDriver::make_WhenStatement(const parse::location& location,
+                                                                 ast::Exp* condition,
+                                                                 ast::Statement* body) const {
+    return new ast::WhenStatement(location, condition, body);
   }
 
   inline ast::BreakStatement* DreamBerdDriver::make_BreakStatement(const parse::location& location,

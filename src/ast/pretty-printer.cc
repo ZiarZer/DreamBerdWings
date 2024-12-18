@@ -48,8 +48,8 @@ namespace ast {
     }
   }
 
-  void PrettyPrinter::operator()(const WhileStatement& e) {
-    stream_ << "while (" << *(e.condition_get()) << ") " << *(e.body_get());
+  void PrettyPrinter::operator()(const WhenStatement& e) {
+    stream_ << "when (" << *(e.condition_get()) << ") " << *(e.body_get());
   }
 
   void PrettyPrinter::operator()(const BreakStatement& e) {
