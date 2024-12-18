@@ -25,6 +25,7 @@ namespace parse {
 
     ast::NullExp* make_NullExp(const parse::location& location) const;
     ast::NumberExp* make_NumberExp(const parse::location& location, float value) const;
+    ast::AwaitExp* make_AwaitExp(const parse::location& location, ast::Exp* awaited) const;
     ast::BinaryOpExp* make_BinaryOpExp(const parse::location& location,
                                        ast::Exp* left,
                                        ast::BinaryOpExp::Oper operation,

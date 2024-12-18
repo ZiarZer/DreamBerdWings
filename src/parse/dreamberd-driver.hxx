@@ -15,6 +15,10 @@ namespace parse {
     return new ast::NumberExp(location, value);
   }
 
+  inline ast::AwaitExp* DreamBerdDriver::make_AwaitExp(const parse::location& location, ast::Exp* awaited) const {
+    return new ast::AwaitExp(location, awaited);
+  }
+
   inline ast::BinaryOpExp* DreamBerdDriver::make_BinaryOpExp(const parse::location& location,
                                                              ast::Exp* left,
                                                              ast::BinaryOpExp::Oper operation,

@@ -46,10 +46,12 @@
        BREAK "break"
        CONTINUE "continue"
        RETURN "return"
+       AWAIT "await"
        LPAREN "("
        RPAREN ")"
 %precedence RPAREN
 %precedence ELSE
+%precedence AWAIT
 %token <float> NUMBER "number";
 %token BANGS QUESTIONS
 %left ADD "+" SUB "-";
@@ -100,6 +102,7 @@ exp:
   | exp SUB exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::sub, $3); }
   | exp MUL exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::mul, $3); }
   | exp DIV exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::div, $3); }
+  | AWAIT exp { $$ = driver.make_AwaitExp(@$, $2); }
   ;
 %%
 
