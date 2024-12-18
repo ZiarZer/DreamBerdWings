@@ -79,6 +79,12 @@ float           [0-9]*\.[0-9]+
 "await"     {
                 return parse::DreamBerdParser::make_AWAIT(driver_.get_location());
             }
+"const"     {
+                return parse::DreamBerdParser::make_CONST(driver_.get_location());
+            }
+"var"       {
+                return parse::DreamBerdParser::make_VAR(driver_.get_location());
+            }
 \n          {
                 driver_.location_next_line();
                 // return parse::DreamBerdParser::make_EOL(driver_.get_location());

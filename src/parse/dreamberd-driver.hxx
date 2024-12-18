@@ -87,6 +87,14 @@ namespace parse {
     return new ast::EmptyStatement(location, punctuation);
   }
 
+  inline ast::VariableDec* DreamBerdDriver::make_VariableDec(const parse::location& location,
+                                                             std::string name,
+                                                             ast::Exp* init,
+                                                             bool reassignable,
+                                                             bool editable) const {
+    return new ast::VariableDec(location, name, init, reassignable, editable);
+  }
+
   template <class... T> inline std::vector<ast::Statement*>* DreamBerdDriver::make_statements(T... statements) const {
     return new std::vector<ast::Statement*>{statements...};
   }

@@ -38,6 +38,7 @@
 
 %token EOF 0 "EOF"
        EOL "EOL"
+       ID "id"
        NULL "null"
        UNDEFINED "undefined"
        IF "if"
@@ -47,6 +48,8 @@
        CONTINUE "continue"
        RETURN "return"
        AWAIT "await"
+       CONST "const"
+       VAR "var"
        LPAREN "("
        RPAREN ")"
 %precedence RPAREN
@@ -58,10 +61,12 @@
 %left MUL "*" DIV "/";
 
 %type <ast::Exp*> exp
+%type <ast::VariableDec*> vardec
 %type <ast::Statement*> statement;
 %type <std::vector<ast::Statement*>*> statements statements.1;
 %type <ast::Punctuation*> punctuation;
 %type <int> BANGS QUESTIONS
+%type <std::string> ID
 
 %start program
 
@@ -103,6 +108,17 @@ exp:
   | exp MUL exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::mul, $3); }
   | exp DIV exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::div, $3); }
   | AWAIT exp { $$ = driver.make_AwaitExp(@$, $2); }
+  ;
+
+vardec:
+    "const" "const" ID { $$ = driver.make_VariableDec(@$, $3, nullptr, false, false); }
+  | "const" "var" ID { $$ = driver.make_VariableDec(@$, $3, nullptr, false, true); }
+  | "var" "const" ID { $$ = driver.make_VariableDec(@$, $3, nullptr, true, false); }
+  | "var" "var" ID { $$ = driver.make_VariableDec(@$, $3, nullptr, true, true); }
+  | "const" "const" ID "=" exp { $$ = driver.make_VariableDec(@$, $3, $5, false, false); }
+  | "const" "var" ID "=" exp { $$ = driver.make_VariableDec(@$, $3, $5, false, true); }
+  | "var" "const" ID "=" exp { $$ = driver.make_VariableDec(@$, $3, $5, true, false); }
+  | "var" "var" ID "=" exp { $$ = driver.make_VariableDec(@$, $3, $5, true, true); }
   ;
 %%
 
