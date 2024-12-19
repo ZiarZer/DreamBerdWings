@@ -50,6 +50,7 @@
        AWAIT "await"
        CONST "const"
        VAR "var"
+       EQ "="
        LPAREN "("
        RPAREN ")"
 %precedence RPAREN
@@ -59,6 +60,7 @@
 %token BANGS QUESTIONS
 %left ADD "+" SUB "-";
 %left MUL "*" DIV "/";
+%left POW "^";
 
 %type <ast::Exp*> exp
 %type <ast::VariableDec*> vardec
@@ -76,6 +78,7 @@ program: statements EOF { driver.ast_ = driver.make_CompoundStatement(@$, $1); r
 
 statement:
     exp punctuation { $$ = driver.make_ExpStatement(@$, $1, $2); }
+  | vardec punctuation { $$ = driver.make_VarDecStatement(@$, $1, $2); }
   | IF "(" exp ")" statement ELSE statement { $$ = driver.make_IfStatement(@$, $3, $5, $7); }
   | IF "(" exp ")" statement { $$ = driver.make_IfStatement(@$, $3, $5); }
   | WHEN "(" exp ")" statement { $$ = driver.make_WhenStatement(@$, $3, $5); }

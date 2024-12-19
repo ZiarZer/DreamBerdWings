@@ -15,6 +15,7 @@
 
 int             [0-9]+\.?
 float           [0-9]*\.[0-9]+
+id              [a-zA-Z0-9]+
 
 %%
 
@@ -45,6 +46,12 @@ float           [0-9]*\.[0-9]+
             }
 "/"         {
                 return parse::DreamBerdParser::make_DIV(driver_.get_location());
+            }
+"^"         {
+                return parse::DreamBerdParser::make_POW(driver_.get_location());
+            }
+"="         {
+                return parse::DreamBerdParser::make_EQ(driver_.get_location());
             }
 "("         {
                 return parse::DreamBerdParser::make_LPAREN(driver_.get_location());
@@ -92,7 +99,9 @@ float           [0-9]*\.[0-9]+
 [\t ]       {
                 // TMP: Ignore whitespaces
             }
-
+{id}        {
+                return parse::DreamBerdParser::make_ID(yytext, driver_.get_location());
+            }
 .           {
                 std::cout << driver_.get_location() << ": invalid identifier: " << yytext << std::endl; 
             }

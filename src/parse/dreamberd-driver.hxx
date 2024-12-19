@@ -41,6 +41,12 @@ namespace parse {
     return new ast::ExpStatement(location, expression, punctuation);
   }
 
+  inline ast::VarDecStatement* DreamBerdDriver::make_VarDecStatement(const parse::location& location,
+                                                                     ast::VariableDec* vardec,
+                                                                     ast::Punctuation* punctuation) const {
+    return new ast::VarDecStatement(location, vardec, punctuation);
+  }
+
   inline ast::CompoundStatement*
   DreamBerdDriver::make_CompoundStatement(const parse::location& location,
                                           std::vector<ast::Statement*>* statements) const {

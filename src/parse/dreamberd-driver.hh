@@ -34,6 +34,9 @@ namespace parse {
     ast::Punctuation* make_Punctuation(const parse::location& location, char type, int count) const;
     ast::ExpStatement*
     make_ExpStatement(const parse::location& location, ast::Exp* expression, ast::Punctuation* punctuation) const;
+    ast::VarDecStatement* make_VarDecStatement(const parse::location& location,
+                                               ast::VariableDec* vardec,
+                                               ast::Punctuation* punctuation) const;
     ast::CompoundStatement* make_CompoundStatement(const parse::location& location,
                                                    std::vector<ast::Statement*>* statements) const;
 
