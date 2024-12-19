@@ -26,6 +26,11 @@ namespace ast {
     e.punctuation_get()->accept(*this);
   }
 
+  void PrettyPrinter::operator()(const VarDecStatement& e) {
+    e.vardec_get()->accept(*this);
+    e.punctuation_get()->accept(*this);
+  }
+
   void PrettyPrinter::operator()(const CompoundStatement& e) {
     if (e.is_root_get()) {
       stream_ << "{" << indent;

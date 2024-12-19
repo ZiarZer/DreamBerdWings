@@ -17,6 +17,7 @@ namespace ast {
     void operator()(const UndefinedExp&) override;
     void operator()(const Punctuation& e) override;
     void operator()(const ExpStatement& e) override;
+    void operator()(const VarDecStatement& e) override;
     void operator()(const CompoundStatement& e) override;
     void operator()(const IfStatement& e) override;
     void operator()(const WhenStatement& e) override;

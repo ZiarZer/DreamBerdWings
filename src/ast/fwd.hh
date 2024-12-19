@@ -11,6 +11,7 @@ namespace ast {
   class UndefinedExp;
   class Statement;
   class ExpStatement;
+  class VarDecStatement;
   class CompoundStatement;
   class IfStatement;
   class WhenStatement;
