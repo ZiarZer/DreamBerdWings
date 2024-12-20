@@ -72,6 +72,7 @@
 %left POW "^";
 
 %type <ast::Exp*> exp
+%type <ast::Var*> lvalue
 %type <ast::VariableDec*> vardec
 %type <ast::Statement*> statement;
 %type <std::vector<ast::Statement*>*> statements statements.1;
@@ -123,6 +124,11 @@ exp:
   | exp MUL exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::mul, $3); }
   | exp DIV exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::div, $3); }
   | AWAIT exp { $$ = driver.make_AwaitExp(@$, $2); }
+  | lvalue { $$ = $1; }
+  ;
+
+lvalue:
+    ID { $$ = driver.make_SimpleVar(@$, $1); }
   ;
 
 vardec:

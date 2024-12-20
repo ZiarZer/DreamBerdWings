@@ -13,6 +13,7 @@ namespace ast {
     virtual void operator()(const StringExp&) = 0;
     virtual void operator()(const BinaryOpExp&) = 0;
     virtual void operator()(const UndefinedExp&) = 0;
+    virtual void operator()(const SimpleVar&) = 0;
     virtual void operator()(const Punctuation&) = 0;
     virtual void operator()(const ExpStatement&) = 0;
     virtual void operator()(const VarDecStatement&) = 0;

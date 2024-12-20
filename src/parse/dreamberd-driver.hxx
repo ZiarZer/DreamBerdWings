@@ -34,6 +34,10 @@ namespace parse {
     return new ast::UndefinedExp(location);
   }
 
+  inline ast::SimpleVar* DreamBerdDriver::make_SimpleVar(const parse::location& location, std::string name) const {
+    return new ast::SimpleVar(location, name);
+  }
+
   inline ast::Punctuation*
   DreamBerdDriver::make_Punctuation(const parse::location& location, char type, int count) const {
     return new ast::Punctuation(location, type, count);

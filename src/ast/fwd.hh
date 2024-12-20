@@ -10,6 +10,7 @@ namespace ast {
   class BinaryOpExp;
   class Punctuation;
   class UndefinedExp;
+  class SimpleVar;
   class Statement;
   class ExpStatement;
   class VarDecStatement;

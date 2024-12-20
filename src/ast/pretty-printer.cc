@@ -84,6 +84,10 @@ namespace ast {
     stream_ << "undefined";
   }
 
+  void PrettyPrinter::operator()(const SimpleVar& e) {
+    stream_ << e.name_get();
+  }
+
   void PrettyPrinter::operator()(const VariableDec& e) {
     stream_ << (e.reassignable_get() ? "var " : "const ");
     stream_ << (e.editable_get() ? "var " : "const ");
