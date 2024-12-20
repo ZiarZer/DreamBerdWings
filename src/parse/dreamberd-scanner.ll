@@ -16,6 +16,8 @@
 int             [0-9]+\.?
 float           [0-9]*\.[0-9]+
 id              [a-zA-Z0-9]+
+classkw         class(Name)?
+funckw          (fu?n?c?t?i?o?n)|(un?c?t?i?o?n?)|(nc?t?i?o?n?)|(ct?i?o?n?)|(ti?o?n?)|(io?n?)|(on?)
 
 %x SINGLE_LINE_COMMENT_ST MULTILINE_COMMENT_ST STRING_ST
 
@@ -109,14 +111,38 @@ id              [a-zA-Z0-9]+
 "return"    {
                 return parse::DreamBerdParser::make_RETURN(driver_.get_location());
             }
+"delete"    {
+                return parse::DreamBerdParser::make_DELETE(driver_.get_location());
+            }
+"reverse"   {
+                return parse::DreamBerdParser::make_REVERSE(driver_.get_location());
+            }
 "await"     {
                 return parse::DreamBerdParser::make_AWAIT(driver_.get_location());
+            }
+"previous"  {
+                return parse::DreamBerdParser::make_PREVIOUS(driver_.get_location());
+            }
+"current"   {
+                return parse::DreamBerdParser::make_CURRENT(driver_.get_location());
+            }
+"next"      {
+                return parse::DreamBerdParser::make_NEXT(driver_.get_location());
+            }
+"async"     {
+                return parse::DreamBerdParser::make_ASYNC(driver_.get_location());
             }
 "const"     {
                 return parse::DreamBerdParser::make_CONST(driver_.get_location());
             }
 "var"       {
                 return parse::DreamBerdParser::make_VAR(driver_.get_location());
+            }
+{funckw}    {
+                return parse::DreamBerdParser::make_FUNCTION(driver_.get_location());
+            }
+{classkw}   {
+                return parse::DreamBerdParser::make_CLASS(driver_.get_location());
             }
 \n          {
                 driver_.location_next_line();
