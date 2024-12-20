@@ -17,9 +17,13 @@ int             [0-9]+\.?
 float           [0-9]*\.[0-9]+
 id              [a-zA-Z0-9]+
 
-%x SINGLE_LINE_COMMENT_ST MULTILINE_COMMENT_ST
+%x SINGLE_LINE_COMMENT_ST MULTILINE_COMMENT_ST STRING_ST
 
 %%
+
+%{
+    std::string string_accumulator = "";
+%}
 
 "//"        { BEGIN(SINGLE_LINE_COMMENT_ST); }
 <SINGLE_LINE_COMMENT_ST>{
@@ -32,6 +36,13 @@ id              [a-zA-Z0-9]+
     "*/"        { BEGIN(INITIAL); }
     .           {}
     <<EOF>>     { std::cout << driver_.get_location() << "unexpected EOF" << std::endl; }
+}
+"\""          { BEGIN(STRING_ST); }
+<STRING_ST>{
+    "\\\""      { string_accumulator += "\""; }
+    "\""        {  BEGIN(INITIAL); return parse::DreamBerdParser::make_STRING(string_accumulator, driver_.get_location()); }
+    .           { string_accumulator += yytext; }
+    <<EOF>> {std::cout << driver_.get_location() << "unexpected EOF" << std::endl;}
 }
 
 {int}|{float} {

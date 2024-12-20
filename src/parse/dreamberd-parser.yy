@@ -57,6 +57,7 @@
 %precedence ELSE
 %precedence AWAIT
 %token <float> NUMBER "number";
+%token <std::string> STRING "string";
 %token BANGS QUESTIONS
 %left ADD "+" SUB "-";
 %left MUL "*" DIV "/";
@@ -106,6 +107,7 @@ exp:
     "null" { $$ = driver.make_NullExp(@$); }
   | "undefined" { $$ = driver.make_UndefinedExp(@$); }
   | NUMBER { $$ = driver.make_NumberExp(@$, $1); }
+  | STRING { $$ = driver.make_StringExp(@$, $1); }
   | exp ADD exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::add, $3); }
   | exp SUB exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::sub, $3); }
   | exp MUL exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::mul, $3); }
