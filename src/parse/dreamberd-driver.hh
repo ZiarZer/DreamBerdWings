@@ -54,6 +54,8 @@ namespace parse {
                                                    ast::Punctuation* punctuation) const;
     ast::ReturnStatement*
     make_ReturnStatement(const parse::location& location, ast::Exp* expression, ast::Punctuation* punctuation) const;
+    ast::DeleteStatement* make_DeleteStatement(const parse::location& location, ast::Punctuation* punctuation) const;
+    ast::ReverseStatement* make_ReverseStatement(const parse::location& location, ast::Punctuation* punctuation) const;
     ast::EmptyStatement* make_EmptyStatement(const parse::location& location, ast::Punctuation* punctuation) const;
     ast::VariableDec* make_VariableDec(const parse::location& location,
                                        std::string name,

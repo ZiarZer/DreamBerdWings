@@ -92,6 +92,16 @@ namespace parse {
     return new ast::ReturnStatement(location, expression, punctuation);
   }
 
+  inline ast::DeleteStatement* DreamBerdDriver::make_DeleteStatement(const parse::location& location,
+                                                                     ast::Punctuation* punctuation) const {
+    return new ast::DeleteStatement(location, punctuation);
+  }
+
+  inline ast::ReverseStatement* DreamBerdDriver::make_ReverseStatement(const parse::location& location,
+                                                                       ast::Punctuation* punctuation) const {
+    return new ast::ReverseStatement(location, punctuation);
+  }
+
   inline ast::EmptyStatement* DreamBerdDriver::make_EmptyStatement(const parse::location& location,
                                                                    ast::Punctuation* punctuation) const {
     return new ast::EmptyStatement(location, punctuation);

@@ -19,6 +19,8 @@ namespace ast {
   class BreakStatement;
   class ContinueStatement;
   class ReturnStatement;
+  class DeleteStatement;
+  class ReverseStatement;
   class EmptyStatement;
   class VariableDec;
 
