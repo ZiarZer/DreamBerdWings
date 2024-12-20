@@ -17,7 +17,22 @@ int             [0-9]+\.?
 float           [0-9]*\.[0-9]+
 id              [a-zA-Z0-9]+
 
+%x SINGLE_LINE_COMMENT_ST MULTILINE_COMMENT_ST
+
 %%
+
+"//"        { BEGIN(SINGLE_LINE_COMMENT_ST); }
+<SINGLE_LINE_COMMENT_ST>{
+    \n        { BEGIN(INITIAL); }
+    .         {}
+    <<EOF>>     { }
+}
+"/*"        { BEGIN(MULTILINE_COMMENT_ST); }
+<MULTILINE_COMMENT_ST>{
+    "*/"        { BEGIN(INITIAL); }
+    .           {}
+    <<EOF>>     { std::cout << driver_.get_location() << "unexpected EOF" << std::endl; }
+}
 
 {int}|{float} {
                 float number;
@@ -107,5 +122,6 @@ id              [a-zA-Z0-9]+
             }
 
 <<EOF>>     { driver_.step_location(1); return yyterminate(); }
+<*>.|\n     { driver_.step_location(1); return yyterminate(); }
 
 %%
