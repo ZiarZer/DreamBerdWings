@@ -59,8 +59,11 @@
        FUNCTION "function"
        CLASS "class"
        EQ "="
+       DOT "."
        LPAREN "("
        RPAREN ")"
+       LBRACKET "["
+       RBRACKET "]"
 %precedence RPAREN
 %precedence ELSE
 %precedence AWAIT
@@ -129,6 +132,8 @@ exp:
 
 lvalue:
     ID { $$ = driver.make_SimpleVar(@$, $1); }
+  | lvalue "[" exp "]" { $$ = driver.make_SubscriptVar(@$, $1, $3); }
+  | lvalue "." ID { $$ = driver.make_PropertyVar(@$, $1, $3); }
   ;
 
 vardec:

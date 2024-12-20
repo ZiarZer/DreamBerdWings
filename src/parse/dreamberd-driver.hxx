@@ -38,6 +38,16 @@ namespace parse {
     return new ast::SimpleVar(location, name);
   }
 
+  inline ast::SubscriptVar*
+  DreamBerdDriver::make_SubscriptVar(const parse::location& location, ast::Var* var, ast::Exp* index) const {
+    return new ast::SubscriptVar(location, var, index);
+  }
+
+  inline ast::PropertyVar*
+  DreamBerdDriver::make_PropertyVar(const parse::location& location, ast::Var* var, std::string property) const {
+    return new ast::PropertyVar(location, var, property);
+  }
+
   inline ast::Punctuation*
   DreamBerdDriver::make_Punctuation(const parse::location& location, char type, int count) const {
     return new ast::Punctuation(location, type, count);

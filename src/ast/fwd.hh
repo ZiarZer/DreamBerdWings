@@ -11,6 +11,8 @@ namespace ast {
   class Punctuation;
   class UndefinedExp;
   class SimpleVar;
+  class SubscriptVar;
+  class PropertyVar;
   class Statement;
   class ExpStatement;
   class VarDecStatement;

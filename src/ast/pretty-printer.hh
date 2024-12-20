@@ -17,6 +17,8 @@ namespace ast {
     void operator()(const BinaryOpExp& e) override;
     void operator()(const UndefinedExp&) override;
     void operator()(const SimpleVar& e) override;
+    void operator()(const SubscriptVar& e) override;
+    void operator()(const PropertyVar& e) override;
     void operator()(const Punctuation& e) override;
     void operator()(const ExpStatement& e) override;
     void operator()(const VarDecStatement& e) override;
