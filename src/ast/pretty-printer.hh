@@ -13,6 +13,7 @@ namespace ast {
 
     void operator()(const NullExp&) override;
     void operator()(const NumberExp& e) override;
+    void operator()(const StringExp& e) override;
     void operator()(const BinaryOpExp& e) override;
     void operator()(const UndefinedExp&) override;
     void operator()(const Punctuation& e) override;

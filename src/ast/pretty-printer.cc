@@ -15,6 +15,11 @@ namespace ast {
   void PrettyPrinter::operator()(const NumberExp& e) {
     stream_ << e.value_get();
   }
+
+  void PrettyPrinter::operator()(const StringExp& e) {
+    stream_ << '"' << e.value_get() << '"';
+  }
+
   void PrettyPrinter::operator()(const BinaryOpExp& e) {
     e.left_get()->accept(*this);
     stream_ << str(e.operation_get());
