@@ -111,12 +111,6 @@ funckw          (fu?n?c?t?i?o?n)|(un?c?t?i?o?n?)|(nc?t?i?o?n?)|(ct?i?o?n?)|(ti?o
 "when"     {
                 return parse::DreamBerdParser::make_WHEN(driver_.get_location());
             }
-"break"     {
-                return parse::DreamBerdParser::make_BREAK(driver_.get_location());
-            }
-"continue"  {
-                return parse::DreamBerdParser::make_CONTINUE(driver_.get_location());
-            }
 "return"    {
                 return parse::DreamBerdParser::make_RETURN(driver_.get_location());
             }

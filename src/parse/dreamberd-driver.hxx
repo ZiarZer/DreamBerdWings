@@ -90,16 +90,6 @@ namespace parse {
     return new ast::WhenStatement(location, condition, body);
   }
 
-  inline ast::BreakStatement* DreamBerdDriver::make_BreakStatement(const parse::location& location,
-                                                                   ast::Punctuation* punctuation) const {
-    return new ast::BreakStatement(location, punctuation);
-  }
-
-  inline ast::ContinueStatement* DreamBerdDriver::make_ContinueStatement(const parse::location& location,
-                                                                         ast::Punctuation* punctuation) const {
-    return new ast::ContinueStatement(location, punctuation);
-  }
-
   inline ast::ReturnStatement* DreamBerdDriver::make_ReturnStatement(const parse::location& location,
                                                                      ast::Exp* expression,
                                                                      ast::Punctuation* punctuation) const {

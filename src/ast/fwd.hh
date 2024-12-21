@@ -19,8 +19,6 @@ namespace ast {
   class CompoundStatement;
   class IfStatement;
   class WhenStatement;
-  class BreakStatement;
-  class ContinueStatement;
   class ReturnStatement;
   class DeleteStatement;
   class ReverseStatement;
