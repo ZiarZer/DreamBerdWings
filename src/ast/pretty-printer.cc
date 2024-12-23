@@ -68,6 +68,12 @@ namespace ast {
     e.punctuation_get()->accept(*this);
   }
 
+  void PrettyPrinter::operator()(const DeleteStatement& e) {
+    stream_ << "delete ";
+    e.deleted_get()->accept(*this);
+    e.punctuation_get()->accept(*this);
+  }
+
   void PrettyPrinter::operator()(const EmptyStatement& e) {
     e.punctuation_get()->accept(*this);
   }

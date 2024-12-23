@@ -97,8 +97,9 @@ namespace parse {
   }
 
   inline ast::DeleteStatement* DreamBerdDriver::make_DeleteStatement(const parse::location& location,
+                                                                     ast::Var* deleted,
                                                                      ast::Punctuation* punctuation) const {
-    return new ast::DeleteStatement(location, punctuation);
+    return new ast::DeleteStatement(location, deleted, punctuation);
   }
 
   inline ast::ReverseStatement* DreamBerdDriver::make_ReverseStatement(const parse::location& location,

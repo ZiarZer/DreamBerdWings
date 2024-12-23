@@ -26,6 +26,7 @@ namespace ast {
     void operator()(const IfStatement& e) override;
     void operator()(const WhenStatement& e) override;
     void operator()(const ReturnStatement& e) override;
+    void operator()(const DeleteStatement& e) override;
     void operator()(const EmptyStatement& e) override;
     void operator()(const VariableDec& e) override;
 

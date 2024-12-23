@@ -94,7 +94,7 @@ statement:
   | IF "(" exp ")" statement { $$ = driver.make_IfStatement(@$, $3, $5); }
   | WHEN "(" exp ")" statement { $$ = driver.make_WhenStatement(@$, $3, $5); }
   | RETURN exp punctuation { $$ = driver.make_ReturnStatement(@$, $2, $3); }
-  | DELETE punctuation { $$ = driver.make_DeleteStatement(@$, $2); }
+  | DELETE lvalue punctuation { $$ = driver.make_DeleteStatement(@$, $2, $3); }
   | REVERSE punctuation { $$ = driver.make_ReverseStatement(@$, $2); }
   | punctuation { $$ = driver.make_EmptyStatement(@$, $1); }
   ;
