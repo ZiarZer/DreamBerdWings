@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../ast/all.hh"
+#include "ast/pretty-printer.hh"
 #include "dreamberd-scanner.hh"
 
 namespace parse {
@@ -12,6 +13,9 @@ namespace parse {
     * \returns result of the parsed operation.
     */
     int parse();
+
+    int parse_cli();
+
     ast::Ast* ast_get() const;
 
     friend class DreamBerdScanner;
@@ -71,6 +75,7 @@ namespace parse {
     DreamBerdParser parser_;
     parse::location location_;
     ast::Ast* ast_;
+    bool terminated_;
   };
 
 } // namespace parse

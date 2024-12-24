@@ -85,7 +85,11 @@
 
 %%
 
-program: statements EOF { driver.ast_ = driver.make_CompoundStatement(@$, $1); return 0; }
+program:
+    EOF { driver.terminated_ = true; return 0; }
+  | EOL { driver.ast_ = nullptr; return 1; }
+  | statement EOL { driver.ast_ = $1; return 1; }
+  ;
 
 statement:
     exp punctuation { $$ = driver.make_ExpStatement(@$, $1, $2); }

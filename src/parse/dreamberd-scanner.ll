@@ -149,7 +149,7 @@ funckw          (fu?n?c?t?i?o?n)|(un?c?t?i?o?n?)|(nc?t?i?o?n?)|(ct?i?o?n?)|(ti?o
             }
 \n          {
                 driver_.location_next_line();
-                // return parse::DreamBerdParser::make_EOL(driver_.get_location());
+                return parse::DreamBerdParser::make_EOL(driver_.get_location());
             }
 [\t ]       {
                 // TMP: Ignore whitespaces

@@ -6,10 +6,23 @@ DreamBerdDriver::DreamBerdDriver()
   : scanner_(*this)
   , parser_(scanner_, *this)
   , location_()
-  , ast_(nullptr) {}
+  , ast_(nullptr)
+  , terminated_(false) {}
 
 int DreamBerdDriver::parse() {
+  std::cout << "> ";
   return parser_.parse();
+}
+
+int DreamBerdDriver::parse_cli() {
+  int res = parse();
+  while (!terminated_) {
+    if (ast_) {
+      std::cout << *ast_ << std::endl;
+    }
+    res = parse();
+  }
+  return res;
 }
 
 void DreamBerdDriver::step_location(unsigned int loc) {
