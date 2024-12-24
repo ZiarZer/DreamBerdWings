@@ -6,6 +6,8 @@ namespace ast {
   class NullExp;
   class NumberExp;
   class StringExp;
+  class ArrayExp;
+  class ObjectExp;
   class AwaitExp;
   class BinaryOpExp;
   class Punctuation;

@@ -12,6 +12,8 @@ namespace ast {
     virtual void operator()(const NumberExp&) = 0;
     virtual void operator()(const StringExp&) = 0;
     virtual void operator()(const BinaryOpExp&) = 0;
+    virtual void operator()(const ArrayExp&) = 0;
+    virtual void operator()(const ObjectExp&) = 0;
     virtual void operator()(const UndefinedExp&) = 0;
     virtual void operator()(const SimpleVar&) = 0;
     virtual void operator()(const SubscriptVar&) = 0;

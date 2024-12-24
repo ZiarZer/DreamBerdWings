@@ -20,6 +20,35 @@ namespace ast {
     stream_ << '"' << e.value_get() << '"';
   }
 
+  void PrettyPrinter::operator()(const ArrayExp& e) {
+    bool is_first_element = true;
+    stream_ << '[';
+    for (Exp* elem : *(e.elems_get())) {
+      if (!is_first_element) {
+        stream_ << ", ";
+      } else {
+        is_first_element = false;
+      }
+      elem->accept(*this);
+    }
+    stream_ << ']';
+  }
+
+  void PrettyPrinter::operator()(const ObjectExp& e) {
+    bool is_first_keyvalue = true;
+    stream_ << "{ ";
+    for (std::pair<std::string, Exp*> keyvalue : *(e.keyvalues_get())) {
+      if (!is_first_keyvalue) {
+        stream_ << ", ";
+      } else {
+        is_first_keyvalue = false;
+      }
+      stream_ << keyvalue.first << ": ";
+      keyvalue.second->accept(*this);
+    }
+    stream_ << " }";
+  }
+
   void PrettyPrinter::operator()(const BinaryOpExp& e) {
     e.left_get()->accept(*this);
     stream_ << str(e.operation_get());

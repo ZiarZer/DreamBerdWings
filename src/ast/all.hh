@@ -1,5 +1,6 @@
 #pragma once
 
+#include "array-exp.hh"
 #include "ast.hh"
 #include "await-exp.hh"
 #include "binary-op-exp.hh"
@@ -11,6 +12,7 @@
 #include "if-statement.hh"
 #include "null-exp.hh"
 #include "number-exp.hh"
+#include "object-exp.hh"
 #include "property-var.hh"
 #include "punctuation.hh"
 #include "return-statement.hh"
