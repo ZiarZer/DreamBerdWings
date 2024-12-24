@@ -128,6 +128,9 @@ exp:
   | exp DIV exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::div, $3); }
   | AWAIT exp { $$ = driver.make_AwaitExp(@$, $2); }
   | lvalue { $$ = $1; }
+  | PREVIOUS lvalue { $$ = driver.make_TimeWatchVar(@$, $2, ast::TimeWatchVar::Time::past); }
+  | CURRENT lvalue { $$ = driver.make_TimeWatchVar(@$, $2, ast::TimeWatchVar::Time::present); }
+  | NEXT lvalue { $$ = driver.make_TimeWatchVar(@$, $2, ast::TimeWatchVar::Time::future); }
   ;
 
 lvalue:

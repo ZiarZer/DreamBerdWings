@@ -39,6 +39,8 @@ namespace parse {
     ast::SimpleVar* make_SimpleVar(const parse::location& location, std::string name) const;
     ast::SubscriptVar* make_SubscriptVar(const parse::location& location, ast::Var* var, ast::Exp* index) const;
     ast::PropertyVar* make_PropertyVar(const parse::location& location, ast::Var* var, std::string property) const;
+    ast::TimeWatchVar*
+    make_TimeWatchVar(const parse::location& location, ast::Var* var, ast::TimeWatchVar::Time time) const;
     ast::Punctuation* make_Punctuation(const parse::location& location, char type, int count) const;
     ast::ExpStatement*
     make_ExpStatement(const parse::location& location, ast::Exp* expression, ast::Punctuation* punctuation) const;

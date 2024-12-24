@@ -48,6 +48,12 @@ namespace parse {
     return new ast::PropertyVar(location, var, property);
   }
 
+  inline ast::TimeWatchVar* DreamBerdDriver::make_TimeWatchVar(const parse::location& location,
+                                                               ast::Var* var,
+                                                               ast::TimeWatchVar::Time time) const {
+    return new ast::TimeWatchVar(location, var, time);
+  }
+
   inline ast::Punctuation*
   DreamBerdDriver::make_Punctuation(const parse::location& location, char type, int count) const {
     return new ast::Punctuation(location, type, count);
