@@ -170,14 +170,13 @@ lvalue:
   ;
 
 vardec:
-    "const" "const" ID { $$ = driver.make_VariableDec(@$, $3, nullptr, false, false); }
-  | "const" "var" ID { $$ = driver.make_VariableDec(@$, $3, nullptr, false, true); }
-  | "var" "const" ID { $$ = driver.make_VariableDec(@$, $3, nullptr, true, false); }
+    "var" "const" ID { $$ = driver.make_VariableDec(@$, $3, nullptr, true, false); }
   | "var" "var" ID { $$ = driver.make_VariableDec(@$, $3, nullptr, true, true); }
   | "const" "const" ID "=" exp { $$ = driver.make_VariableDec(@$, $3, $5, false, false); }
   | "const" "var" ID "=" exp { $$ = driver.make_VariableDec(@$, $3, $5, false, true); }
   | "var" "const" ID "=" exp { $$ = driver.make_VariableDec(@$, $3, $5, true, false); }
   | "var" "var" ID "=" exp { $$ = driver.make_VariableDec(@$, $3, $5, true, true); }
+  | "const" "const" "const" ID "=" exp { $$ = driver.make_GlobalConstantDec(@$, $4, $6); }
   ;
 %%
 

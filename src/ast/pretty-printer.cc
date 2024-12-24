@@ -143,6 +143,11 @@ namespace ast {
     }
   }
 
+  void PrettyPrinter::operator()(const GlobalConstantDec& e) {
+    stream_ << "const const const " << e.name_get() << " = ";
+    e.init_get()->accept(*this);
+  }
+
   void PrettyPrinter::operator()(const Punctuation& e) {
     if (e.type_get() == '!' && e.count_get() < 0) {
       for (int i = 0; i > e.count_get(); i--) {

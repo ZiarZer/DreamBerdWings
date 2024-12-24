@@ -9,6 +9,7 @@
 #include "empty-statement.hh"
 #include "exp-statement.hh"
 #include "exp.hh"
+#include "global-constant-dec.hh"
 #include "if-statement.hh"
 #include "null-exp.hh"
 #include "number-exp.hh"

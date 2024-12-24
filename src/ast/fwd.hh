@@ -27,6 +27,7 @@ namespace ast {
   class ReverseStatement;
   class EmptyStatement;
   class VariableDec;
+  class GlobalConstantDec;
 
   class Visitor;
 } // namespace ast

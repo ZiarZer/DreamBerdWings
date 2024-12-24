@@ -72,6 +72,8 @@ namespace parse {
                                        ast::Exp* init,
                                        bool reassignable,
                                        bool editable) const;
+    ast::GlobalConstantDec*
+    make_GlobalConstantDec(const parse::location& location, std::string name, ast::Exp* init) const;
 
     template <class... T> std::vector<ast::Statement*>* make_statements(T... statements) const;
     template <class... T> std::vector<ast::Exp*>* make_exps(T... exps) const;

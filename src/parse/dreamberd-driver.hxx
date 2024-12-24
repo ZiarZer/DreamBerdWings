@@ -137,6 +137,11 @@ namespace parse {
     return new ast::VariableDec(location, name, init, reassignable, editable);
   }
 
+  inline ast::GlobalConstantDec*
+  DreamBerdDriver::make_GlobalConstantDec(const parse::location& location, std::string name, ast::Exp* init) const {
+    return new ast::GlobalConstantDec(location, name, init);
+  }
+
   template <class... T> inline std::vector<ast::Statement*>* DreamBerdDriver::make_statements(T... statements) const {
     return new std::vector<ast::Statement*>{statements...};
   }

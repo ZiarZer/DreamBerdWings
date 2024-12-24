@@ -32,6 +32,7 @@ namespace ast {
     void operator()(const DeleteStatement& e) override;
     void operator()(const EmptyStatement& e) override;
     void operator()(const VariableDec& e) override;
+    void operator()(const GlobalConstantDec& e) override;
 
   protected:
     std::ostream& stream_;
