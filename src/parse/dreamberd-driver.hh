@@ -30,6 +30,9 @@ namespace parse {
     ast::NullExp* make_NullExp(const parse::location& location) const;
     ast::NumberExp* make_NumberExp(const parse::location& location, float value) const;
     ast::StringExp* make_StringExp(const parse::location& location, std::string value) const;
+    ast::ArrayExp* make_ArrayExp(const parse::location& location, std::vector<ast::Exp*>* elems) const;
+    ast::ObjectExp* make_ObjectExp(const parse::location& location,
+                                   std::vector<std::pair<std::string, ast::Exp*>>* keyvalues) const;
     ast::AwaitExp* make_AwaitExp(const parse::location& location, ast::Exp* awaited) const;
     ast::BinaryOpExp* make_BinaryOpExp(const parse::location& location,
                                        ast::Exp* left,
@@ -71,6 +74,8 @@ namespace parse {
                                        bool editable) const;
 
     template <class... T> std::vector<ast::Statement*>* make_statements(T... statements) const;
+    template <class... T> std::vector<ast::Exp*>* make_exps(T... exps) const;
+    template <class... T> std::vector<std::pair<std::string, ast::Exp*>>* make_keyvalues(T... keyvalues) const;
 
   private:
     DreamBerdScanner scanner_;

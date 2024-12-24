@@ -19,6 +19,17 @@ namespace parse {
     return new ast::StringExp(location, value);
   }
 
+  inline ast::ArrayExp* DreamBerdDriver::make_ArrayExp(const parse::location& location,
+                                                       std::vector<ast::Exp*>* elems) const {
+    return new ast::ArrayExp(location, elems);
+  }
+
+  inline ast::ObjectExp*
+  DreamBerdDriver::make_ObjectExp(const parse::location& location,
+                                  std::vector<std::pair<std::string, ast::Exp*>>* keyvalues) const {
+    return new ast::ObjectExp(location, keyvalues);
+  }
+
   inline ast::AwaitExp* DreamBerdDriver::make_AwaitExp(const parse::location& location, ast::Exp* awaited) const {
     return new ast::AwaitExp(location, awaited);
   }
@@ -128,5 +139,14 @@ namespace parse {
 
   template <class... T> inline std::vector<ast::Statement*>* DreamBerdDriver::make_statements(T... statements) const {
     return new std::vector<ast::Statement*>{statements...};
+  }
+
+  template <class... T> inline std::vector<ast::Exp*>* DreamBerdDriver::make_exps(T... exps) const {
+    return new std::vector<ast::Exp*>{exps...};
+  }
+
+  template <class... T>
+  inline std::vector<std::pair<std::string, ast::Exp*>>* DreamBerdDriver::make_keyvalues(T... keyvalues) const {
+    return new std::vector<std::pair<std::string, ast::Exp*>>{keyvalues...};
   }
 } // namespace parse

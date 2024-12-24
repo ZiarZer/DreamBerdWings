@@ -58,10 +58,14 @@
        CLASS "class"
        EQ "="
        DOT "."
+       COMA ","
+       COLON ":"
        LPAREN "("
        RPAREN ")"
        LBRACKET "["
        RBRACKET "]"
+       LBRACE "{"
+       RBRACE "}"
 %precedence RPAREN
 %precedence ELSE
 %precedence AWAIT
@@ -73,6 +77,9 @@
 %left POW "^";
 
 %type <ast::Exp*> exp
+%type <std::vector<ast::Exp*>*> exps exps.1;
+%type <std::pair<std::string, ast::Exp*>> keyvalue
+%type <std::vector<std::pair<std::string, ast::Exp*>>*> keyvalues keyvalues.1
 %type <ast::Var*> lvalue
 %type <ast::VariableDec*> vardec
 %type <ast::Statement*> statement;
@@ -122,6 +129,8 @@ exp:
   | "undefined" { $$ = driver.make_UndefinedExp(@$); }
   | NUMBER { $$ = driver.make_NumberExp(@$, $1); }
   | STRING { $$ = driver.make_StringExp(@$, $1); }
+  | "[" exps "]" { $$ = driver.make_ArrayExp(@$, $2); }
+  | "{" keyvalues "}" { $$ = driver.make_ObjectExp(@$, $2); }
   | exp ADD exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::add, $3); }
   | exp SUB exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::sub, $3); }
   | exp MUL exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::mul, $3); }
@@ -131,6 +140,27 @@ exp:
   | PREVIOUS lvalue { $$ = driver.make_TimeWatchVar(@$, $2, ast::TimeWatchVar::Time::past); }
   | CURRENT lvalue { $$ = driver.make_TimeWatchVar(@$, $2, ast::TimeWatchVar::Time::present); }
   | NEXT lvalue { $$ = driver.make_TimeWatchVar(@$, $2, ast::TimeWatchVar::Time::future); }
+  ;
+exps:
+    %empty { $$ = driver.make_exps(); }
+  | exps.1 { $$ = $1; }
+  ;
+exps.1:
+    exp { $$ = driver.make_exps($1); }
+  | exps.1 COMA exp { $$ = $1; $$->push_back($3); }
+  ;
+
+keyvalue:
+    ID ":" exp { $$ = std::make_pair<std::string, ast::Exp*>(std::string($1), std::move($3)); }
+  | ID { $$ = std::make_pair<std::string, ast::Exp*>(std::string($1), driver.make_SimpleVar(@$, $1)); }
+  ;
+keyvalues:
+    %empty { $$ = driver.make_keyvalues(); }
+  | keyvalues.1 { $$ = $1; }
+  ;
+keyvalues.1:
+    keyvalue { $$ = driver.make_keyvalues($1); }
+  | keyvalues.1 COMA keyvalue { $$ = $1; $$->push_back($3); }
   ;
 
 lvalue:
