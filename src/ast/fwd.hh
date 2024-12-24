@@ -13,6 +13,7 @@ namespace ast {
   class SimpleVar;
   class SubscriptVar;
   class PropertyVar;
+  class TimeWatchVar;
   class Statement;
   class ExpStatement;
   class VarDecStatement;

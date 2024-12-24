@@ -19,6 +19,7 @@
 #include "statement.hh"
 #include "string-exp.hh"
 #include "subscript-var.hh"
+#include "time-watch-var.hh"
 #include "undefined-exp.hh"
 #include "var-dec-statement.hh"
 #include "var.hh"

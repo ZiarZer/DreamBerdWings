@@ -93,6 +93,11 @@ namespace ast {
     stream_ << "]";
   }
 
+  void PrettyPrinter::operator()(const TimeWatchVar& e) {
+    stream_ << str(e.time_get()) << ' ';
+    e.var_get()->accept(*this);
+  }
+
   void PrettyPrinter::operator()(const PropertyVar& e) {
     e.var_get()->accept(*this);
     stream_ << "." << e.property_get();
