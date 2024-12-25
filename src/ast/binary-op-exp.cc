@@ -17,6 +17,8 @@ namespace ast {
       return "*";
     case BinaryOpExp::Oper::div:
       return "/";
+    case BinaryOpExp::Oper::pow:
+      return "^";
     default:
       return "";
     }

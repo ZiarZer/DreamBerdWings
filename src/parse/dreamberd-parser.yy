@@ -75,6 +75,8 @@
 %left ADD "+" SUB "-";
 %left MUL "*" DIV "/";
 %left POW "^";
+%nonassoc INCREMENT "++" DECREMENT "--"
+%left NOT ";"
 
 %type <ast::Exp*> exp
 %type <std::vector<ast::Exp*>*> exps exps.1;
@@ -135,6 +137,13 @@ exp:
   | exp SUB exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::sub, $3); }
   | exp MUL exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::mul, $3); }
   | exp DIV exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::div, $3); }
+  | exp POW exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::pow, $3); }
+  | NOT exp { $$ = driver.make_UnaryOpExp(@$, $2, ast::UnaryOpExp::Oper::_not); }
+  | SUB exp { $$ = driver.make_UnaryOpExp(@$, $2, ast::UnaryOpExp::Oper::minus); }
+  | INCREMENT exp { $$ = driver.make_UnaryOpExp(@$, $2, ast::UnaryOpExp::Oper::preincrement); }
+  | DECREMENT exp { $$ = driver.make_UnaryOpExp(@$, $2, ast::UnaryOpExp::Oper::predecrement); }
+  | exp INCREMENT { $$ = driver.make_UnaryOpExp(@$, $1, ast::UnaryOpExp::Oper::postincrement); }
+  | exp DECREMENT { $$ = driver.make_UnaryOpExp(@$, $1, ast::UnaryOpExp::Oper::postdecrement); }
   | AWAIT exp { $$ = driver.make_AwaitExp(@$, $2); }
   | lvalue { $$ = $1; }
   | PREVIOUS lvalue { $$ = driver.make_TimeWatchVar(@$, $2, ast::TimeWatchVar::Time::past); }

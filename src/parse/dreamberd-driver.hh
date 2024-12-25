@@ -34,6 +34,8 @@ namespace parse {
     ast::ObjectExp* make_ObjectExp(const parse::location& location,
                                    std::vector<std::pair<std::string, ast::Exp*>>* keyvalues) const;
     ast::AwaitExp* make_AwaitExp(const parse::location& location, ast::Exp* awaited) const;
+    ast::UnaryOpExp*
+    make_UnaryOpExp(const parse::location& location, ast::Exp* operand, ast::UnaryOpExp::Oper operation) const;
     ast::BinaryOpExp* make_BinaryOpExp(const parse::location& location,
                                        ast::Exp* left,
                                        ast::BinaryOpExp::Oper operation,

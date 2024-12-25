@@ -23,6 +23,7 @@
 #include "string-exp.hh"
 #include "subscript-var.hh"
 #include "time-watch-var.hh"
+#include "unary-op-exp.hh"
 #include "undefined-exp.hh"
 #include "var-dec-statement.hh"
 #include "var.hh"

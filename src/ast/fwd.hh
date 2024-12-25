@@ -10,6 +10,7 @@ namespace ast {
   class ObjectExp;
   class AwaitExp;
   class BinaryOpExp;
+  class UnaryOpExp;
   class Punctuation;
   class UndefinedExp;
   class SimpleVar;

@@ -49,6 +49,18 @@ namespace ast {
     stream_ << " }";
   }
 
+  void PrettyPrinter::operator()(const UnaryOpExp& e) {
+    UnaryOpExp::Oper operation = e.operation_get();
+    bool is_postfix = operation == UnaryOpExp::Oper::postincrement || operation == UnaryOpExp::Oper::postdecrement;
+    if (!is_postfix) {
+      stream_ << str(operation);
+    }
+    e.operand_get()->accept(*this);
+    if (is_postfix) {
+      stream_ << str(operation);
+    }
+  }
+
   void PrettyPrinter::operator()(const BinaryOpExp& e) {
     e.left_get()->accept(*this);
     stream_ << str(e.operation_get());

@@ -6,7 +6,7 @@
 namespace ast {
   class BinaryOpExp : public Exp {
   public:
-    enum class Oper { add, sub, mul, div };
+    enum class Oper { add, sub, mul, div, pow };
 
     BinaryOpExp(const Location& location, Exp* left, Oper operation, Exp* right);
     BinaryOpExp(const BinaryOpExp&) = delete;

@@ -63,6 +63,12 @@ funckw          (fu?n?c?t?i?o?n)|(un?c?t?i?o?n?)|(nc?t?i?o?n?)|(ct?i?o?n?)|(ti?o
 "?"+        {
                 return parse::DreamBerdParser::make_QUESTIONS(yyleng, driver_.get_location());
             }
+"++"        {
+                return parse::DreamBerdParser::make_INCREMENT(driver_.get_location());
+            }
+"--"        {
+                return parse::DreamBerdParser::make_DECREMENT(driver_.get_location());
+            }
 "+"         {
                 return parse::DreamBerdParser::make_ADD(driver_.get_location());
             }
@@ -86,6 +92,9 @@ funckw          (fu?n?c?t?i?o?n)|(un?c?t?i?o?n?)|(nc?t?i?o?n?)|(ct?i?o?n?)|(ti?o
             }
 ","         {
                 return parse::DreamBerdParser::make_COMA(driver_.get_location());
+            }
+";"         {
+                return parse::DreamBerdParser::make_NOT(driver_.get_location());
             }
 ":"         {
                 return parse::DreamBerdParser::make_COLON(driver_.get_location());
