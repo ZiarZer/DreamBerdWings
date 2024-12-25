@@ -46,12 +46,14 @@ namespace parse {
     ast::PropertyVar* make_PropertyVar(const parse::location& location, ast::Var* var, std::string property) const;
     ast::TimeWatchVar*
     make_TimeWatchVar(const parse::location& location, ast::Var* var, ast::TimeWatchVar::Time time) const;
+    ast::CallExp* make_CallExp(const parse::location& location, ast::Var* callee, std::vector<ast::Exp*>* params) const;
     ast::Punctuation* make_Punctuation(const parse::location& location, char type, int count) const;
     ast::ExpStatement*
     make_ExpStatement(const parse::location& location, ast::Exp* expression, ast::Punctuation* punctuation) const;
     ast::VarDecStatement* make_VarDecStatement(const parse::location& location,
                                                ast::VariableDec* vardec,
                                                ast::Punctuation* punctuation) const;
+    ast::FunDecStatement* make_FunDecStatement(const parse::location& location, ast::FunctionDec* fundec) const;
     ast::CompoundStatement* make_CompoundStatement(const parse::location& location,
                                                    std::vector<ast::Statement*>* statements) const;
 
@@ -74,11 +76,17 @@ namespace parse {
                                        ast::Exp* init,
                                        bool reassignable,
                                        bool editable) const;
+    ast::FunctionDec* make_FunctionDec(const parse::location& location,
+                                       std::string name,
+                                       std::vector<ast::VariableDec*>* args,
+                                       ast::Statement* body,
+                                       bool is_async) const;
     ast::GlobalConstantDec*
     make_GlobalConstantDec(const parse::location& location, std::string name, ast::Exp* init) const;
 
     template <class... T> std::vector<ast::Statement*>* make_statements(T... statements) const;
     template <class... T> std::vector<ast::Exp*>* make_exps(T... exps) const;
+    template <class... T> std::vector<ast::VariableDec*>* make_args(T... args) const;
     template <class... T> std::vector<std::pair<std::string, ast::Exp*>>* make_keyvalues(T... keyvalues) const;
 
   private:

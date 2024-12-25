@@ -23,9 +23,11 @@ namespace ast {
     void operator()(const SubscriptVar& e) override;
     void operator()(const PropertyVar& e) override;
     void operator()(const TimeWatchVar& e) override;
+    void operator()(const CallExp& e) override;
     void operator()(const Punctuation& e) override;
     void operator()(const ExpStatement& e) override;
     void operator()(const VarDecStatement& e) override;
+    void operator()(const FunDecStatement& e) override;
     void operator()(const CompoundStatement& e) override;
     void operator()(const IfStatement& e) override;
     void operator()(const WhenStatement& e) override;
@@ -34,6 +36,7 @@ namespace ast {
     void operator()(const EmptyStatement& e) override;
     void operator()(const VariableDec& e) override;
     void operator()(const GlobalConstantDec& e) override;
+    void operator()(const FunctionDec& e) override;
 
   protected:
     std::ostream& stream_;

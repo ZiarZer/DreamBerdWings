@@ -71,6 +71,12 @@ namespace parse {
     return new ast::TimeWatchVar(location, var, time);
   }
 
+  inline ast::CallExp* DreamBerdDriver::make_CallExp(const parse::location& location,
+                                                     ast::Var* callee,
+                                                     std::vector<ast::Exp*>* params) const {
+    return new ast::CallExp(location, callee, params);
+  }
+
   inline ast::Punctuation*
   DreamBerdDriver::make_Punctuation(const parse::location& location, char type, int count) const {
     return new ast::Punctuation(location, type, count);
@@ -86,6 +92,11 @@ namespace parse {
                                                                      ast::VariableDec* vardec,
                                                                      ast::Punctuation* punctuation) const {
     return new ast::VarDecStatement(location, vardec, punctuation);
+  }
+
+  inline ast::FunDecStatement* DreamBerdDriver::make_FunDecStatement(const parse::location& location,
+                                                                     ast::FunctionDec* fundec) const {
+    return new ast::FunDecStatement(location, fundec);
   }
 
   inline ast::CompoundStatement*
@@ -143,6 +154,14 @@ namespace parse {
     return new ast::VariableDec(location, name, init, reassignable, editable);
   }
 
+  inline ast::FunctionDec* DreamBerdDriver::make_FunctionDec(const parse::location& location,
+                                                             std::string name,
+                                                             std::vector<ast::VariableDec*>* args,
+                                                             ast::Statement* body,
+                                                             bool is_async) const {
+    return new ast::FunctionDec(location, name, args, body, is_async);
+  }
+
   inline ast::GlobalConstantDec*
   DreamBerdDriver::make_GlobalConstantDec(const parse::location& location, std::string name, ast::Exp* init) const {
     return new ast::GlobalConstantDec(location, name, init);
@@ -154,6 +173,10 @@ namespace parse {
 
   template <class... T> inline std::vector<ast::Exp*>* DreamBerdDriver::make_exps(T... exps) const {
     return new std::vector<ast::Exp*>{exps...};
+  }
+
+  template <class... T> inline std::vector<ast::VariableDec*>* DreamBerdDriver::make_args(T... args) const {
+    return new std::vector<ast::VariableDec*>{args...};
   }
 
   template <class... T>

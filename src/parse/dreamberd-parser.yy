@@ -56,6 +56,7 @@
        VAR "var"
        FUNCTION "function"
        CLASS "class"
+       ARROW "=>"
        EQ "="
        DOT "."
        COMA ","
@@ -84,6 +85,8 @@
 %type <std::vector<std::pair<std::string, ast::Exp*>>*> keyvalues keyvalues.1
 %type <ast::Var*> lvalue
 %type <ast::VariableDec*> vardec
+%type <std::vector<ast::VariableDec*>*> args args.1;
+%type <ast::FunctionDec*> fundec
 %type <ast::Statement*> statement;
 %type <std::vector<ast::Statement*>*> statements statements.1;
 %type <ast::Punctuation*> punctuation;
@@ -103,6 +106,7 @@ program:
 statement:
     exp punctuation { $$ = driver.make_ExpStatement(@$, $1, $2); }
   | vardec punctuation { $$ = driver.make_VarDecStatement(@$, $1, $2); }
+  | fundec { $$ = driver.make_FunDecStatement(@$, $1); }
   | IF "(" exp ")" statement ELSE statement { $$ = driver.make_IfStatement(@$, $3, $5, $7); }
   | IF "(" exp ")" statement { $$ = driver.make_IfStatement(@$, $3, $5); }
   | WHEN "(" exp ")" statement { $$ = driver.make_WhenStatement(@$, $3, $5); }
@@ -149,6 +153,7 @@ exp:
   | PREVIOUS lvalue { $$ = driver.make_TimeWatchVar(@$, $2, ast::TimeWatchVar::Time::past); }
   | CURRENT lvalue { $$ = driver.make_TimeWatchVar(@$, $2, ast::TimeWatchVar::Time::present); }
   | NEXT lvalue { $$ = driver.make_TimeWatchVar(@$, $2, ast::TimeWatchVar::Time::future); }
+  | lvalue "(" exps ")" { $$ = driver.make_CallExp(@$, $1, $3); }
   ;
 exps:
     %empty { $$ = driver.make_exps(); }
@@ -186,6 +191,19 @@ vardec:
   | "var" "const" ID "=" exp { $$ = driver.make_VariableDec(@$, $3, $5, true, false); }
   | "var" "var" ID "=" exp { $$ = driver.make_VariableDec(@$, $3, $5, true, true); }
   | "const" "const" "const" ID "=" exp { $$ = driver.make_GlobalConstantDec(@$, $4, $6); }
+  ;
+
+fundec:
+    FUNCTION ID "(" args ")" "=>" LBRACE statements RBRACE { $$ = driver.make_FunctionDec(@$, $2, $4, driver.make_CompoundStatement(@$, $8), false); }
+  | ASYNC FUNCTION ID "(" args ")" "=>" LBRACE statements RBRACE { $$ = driver.make_FunctionDec(@$, $3, $5, driver.make_CompoundStatement(@$, $9), true); }
+  ;
+args:
+    %empty { $$ = driver.make_args(); }
+  | args.1 { $$ = $1; }
+  ;
+args.1:
+    ID { $$ = driver.make_args(driver.make_VariableDec(@$, $1, nullptr, true, true)); }
+  | args.1 ID { $$ = $1; $$->push_back(driver.make_VariableDec(@$, $2, nullptr, true, true)); }
   ;
 %%
 

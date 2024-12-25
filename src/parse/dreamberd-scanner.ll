@@ -168,6 +168,9 @@ funckw          (fu?n?c?t?i?o?n)|(un?c?t?i?o?n?)|(nc?t?i?o?n?)|(ct?i?o?n?)|(ti?o
 {classkw}   {
                 return parse::DreamBerdParser::make_CLASS(driver_.get_location());
             }
+"=>"        {
+                return parse::DreamBerdParser::make_ARROW(driver_.get_location());
+            }
 \n          {
                 driver_.location_next_line();
                 return parse::DreamBerdParser::make_EOL(driver_.get_location());

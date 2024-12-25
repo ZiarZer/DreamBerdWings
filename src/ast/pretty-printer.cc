@@ -77,8 +77,12 @@ namespace ast {
     e.punctuation_get()->accept(*this);
   }
 
+  void PrettyPrinter::operator()(const FunDecStatement& e) {
+    e.fundec_get()->accept(*this);
+  }
+
   void PrettyPrinter::operator()(const CompoundStatement& e) {
-    if (e.is_root_get()) {
+    if (!e.is_root_get()) {
       stream_ << "{" << indent;
     } else {
       stream_ << "/* Parsed AST: */";
@@ -87,7 +91,7 @@ namespace ast {
       stream_ << iendl;
       statement->accept(*this);
     }
-    if (e.is_root_get()) {
+    if (!e.is_root_get()) {
       stream_ << unindent << iendl << "}";
     }
   }
@@ -139,6 +143,22 @@ namespace ast {
     e.var_get()->accept(*this);
   }
 
+  void PrettyPrinter::operator()(const CallExp& e) {
+    e.callee_get()->accept(*this);
+
+    bool is_first_param = true;
+    stream_ << '(';
+    for (Exp* param : *(e.params_get())) {
+      if (!is_first_param) {
+        stream_ << ", ";
+      } else {
+        is_first_param = false;
+      }
+      param->accept(*this);
+    }
+    stream_ << ')';
+  }
+
   void PrettyPrinter::operator()(const PropertyVar& e) {
     e.var_get()->accept(*this);
     stream_ << "." << e.property_get();
@@ -158,6 +178,26 @@ namespace ast {
   void PrettyPrinter::operator()(const GlobalConstantDec& e) {
     stream_ << "const const const " << e.name_get() << " = ";
     e.init_get()->accept(*this);
+  }
+
+  void PrettyPrinter::operator()(const FunctionDec& e) {
+    if (e.is_async_get()) {
+      stream_ << "async ";
+    }
+    stream_ << "function " << e.name_get() << "(";
+
+    bool is_first_arg = true;
+    for (VariableDec* vardec : *(e.args_get())) {
+      if (!is_first_arg) {
+        stream_ << ", ";
+      } else {
+        is_first_arg = false;
+      }
+      stream_ << vardec->name_get();
+    }
+
+    stream_ << ") => ";
+    e.body_get()->accept(*this);
   }
 
   void PrettyPrinter::operator()(const Punctuation& e) {

@@ -17,9 +17,11 @@ namespace ast {
   class SubscriptVar;
   class PropertyVar;
   class TimeWatchVar;
+  class CallExp;
   class Statement;
   class ExpStatement;
   class VarDecStatement;
+  class FunDecStatement;
   class CompoundStatement;
   class IfStatement;
   class WhenStatement;
@@ -29,6 +31,7 @@ namespace ast {
   class EmptyStatement;
   class VariableDec;
   class GlobalConstantDec;
+  class FunctionDec;
 
   class Visitor;
 } // namespace ast

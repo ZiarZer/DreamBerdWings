@@ -20,9 +20,11 @@ namespace ast {
     virtual void operator()(const SubscriptVar&) = 0;
     virtual void operator()(const PropertyVar&) = 0;
     virtual void operator()(const TimeWatchVar&) = 0;
+    virtual void operator()(const CallExp&) = 0;
     virtual void operator()(const Punctuation&) = 0;
     virtual void operator()(const ExpStatement&) = 0;
     virtual void operator()(const VarDecStatement&) = 0;
+    virtual void operator()(const FunDecStatement&) = 0;
     virtual void operator()(const CompoundStatement&) = 0;
     virtual void operator()(const IfStatement&) = 0;
     virtual void operator()(const WhenStatement&) = 0;
@@ -31,6 +33,7 @@ namespace ast {
     virtual void operator()(const EmptyStatement&) = 0;
     virtual void operator()(const VariableDec&) = 0;
     virtual void operator()(const GlobalConstantDec&) = 0;
+    virtual void operator()(const FunctionDec&) = 0;
     template <typename E> void accept(E* e);
     template <class E> void operator()(E* e);
   };
