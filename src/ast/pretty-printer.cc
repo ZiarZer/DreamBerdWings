@@ -113,6 +113,11 @@ namespace ast {
     e.punctuation_get()->accept(*this);
   }
 
+  void PrettyPrinter::operator()(const ReverseStatement& e) {
+    stream_ << "reverse";
+    e.punctuation_get()->accept(*this);
+  }
+
   void PrettyPrinter::operator()(const DeleteStatement& e) {
     stream_ << "delete ";
     e.deleted_get()->accept(*this);

@@ -29,6 +29,7 @@ namespace ast {
     virtual void operator()(const IfStatement&) = 0;
     virtual void operator()(const WhenStatement&) = 0;
     virtual void operator()(const ReturnStatement&) = 0;
+    virtual void operator()(const ReverseStatement&) = 0;
     virtual void operator()(const DeleteStatement&) = 0;
     virtual void operator()(const EmptyStatement&) = 0;
     virtual void operator()(const VariableDec&) = 0;
