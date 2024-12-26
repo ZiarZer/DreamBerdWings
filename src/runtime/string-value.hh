@@ -2,6 +2,7 @@
 
 #include <string>
 #include "value.hh"
+#include "visitor.hh"
 
 namespace runtime {
   class StringValue : public Value {
@@ -11,6 +12,8 @@ namespace runtime {
     StringValue& operator=(const StringValue&) = delete;
 
     std::string value_get() const;
+
+    void accept(Visitor& v) const override;
 
   protected:
     std::string value_;

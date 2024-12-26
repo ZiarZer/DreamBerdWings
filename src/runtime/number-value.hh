@@ -1,6 +1,7 @@
 #pragma once
 
 #include "value.hh"
+#include "visitor.hh"
 
 namespace runtime {
   class NumberValue : public Value {
@@ -10,6 +11,8 @@ namespace runtime {
     NumberValue& operator=(const NumberValue&) = delete;
 
     float value_get() const;
+
+    void accept(Visitor& v) const override;
 
   protected:
     float value_;
