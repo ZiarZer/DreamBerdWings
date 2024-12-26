@@ -3,5 +3,5 @@
 int main(void) {
   parse::DreamBerdDriver driver;
 
-  return driver.parse_cli();
+  return driver.run_cli();
 }

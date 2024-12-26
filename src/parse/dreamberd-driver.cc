@@ -14,11 +14,13 @@ int DreamBerdDriver::parse() {
   return parser_.parse();
 }
 
-int DreamBerdDriver::parse_cli() {
+int DreamBerdDriver::run_cli() {
+  runtime::Evaluator evaluator = runtime::Evaluator();
   int res = parse();
   while (!terminated_) {
     if (ast_) {
-      std::cout << *ast_ << std::endl;
+      evaluator(*ast_);
+      std::cout << *(evaluator.current_value_get()) << std::endl;
     }
     res = parse();
   }

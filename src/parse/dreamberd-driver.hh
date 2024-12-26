@@ -1,7 +1,9 @@
 #pragma once
 
 #include "../ast/all.hh"
-#include "ast/pretty-printer.hh"
+#include "../ast/pretty-printer.hh"
+#include "../runtime/cli-printer.hh"
+#include "../runtime/evaluator.hh"
 #include "dreamberd-scanner.hh"
 
 namespace parse {
@@ -14,7 +16,7 @@ namespace parse {
     */
     int parse();
 
-    int parse_cli();
+    int run_cli();
 
     ast::Ast* ast_get() const;
 
