@@ -41,6 +41,9 @@
        ID "id"
        NULL "null"
        UNDEFINED "undefined"
+       TRUE "true"
+       FALSE "false"
+       MAYBE "maybe"
        IF "if"
        ELSE "else"
        WHEN "when"
@@ -133,6 +136,8 @@ punctuation:
 exp:
     "null" { $$ = driver.make_NullExp(@$); }
   | "undefined" { $$ = driver.make_UndefinedExp(@$); }
+  | "true" { $$ = driver.make_BoolExp(@$, true); }
+  | "false" { $$ = driver.make_BoolExp(@$, false); }
   | NUMBER { $$ = driver.make_NumberExp(@$, $1); }
   | STRING { $$ = driver.make_StringExp(@$, $1); }
   | "[" exps "]" { $$ = driver.make_ArrayExp(@$, $2); }

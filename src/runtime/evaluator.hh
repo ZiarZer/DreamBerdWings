@@ -21,6 +21,7 @@ namespace runtime {
 
     void operator()(const NullExp&) override;
     void operator()(const NumberExp& e) override;
+    void operator()(const BoolExp& e) override;
     void operator()(const StringExp& e) override;
     void operator()(const UnaryOpExp& e) override;
     void operator()(const BinaryOpExp& e) override;

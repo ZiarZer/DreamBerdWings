@@ -132,6 +132,10 @@ namespace ast {
     stream_ << "undefined";
   }
 
+  void PrettyPrinter::operator()(const BoolExp& e) {
+    stream_ << (e.value_get() ? "true" : "false");
+  }
+
   void PrettyPrinter::operator()(const SimpleVar& e) {
     stream_ << e.name_get();
   }

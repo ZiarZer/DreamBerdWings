@@ -15,7 +15,17 @@ namespace runtime {
   }
 
   void CLIPrinter::operator()(const NumberValue& e) {
-    stream_ << "\033[32m" << e.value_get() << "\033[0m";
+    stream_ << "\033[32m";
+    if (e.is_NaN_get()) {
+      stream_ << "NaN";
+    } else {
+      stream_ << e.value_get();
+    }
+    stream_ << "\033[0m";
+  }
+
+  void CLIPrinter::operator()(const BoolValue& e) {
+    stream_ << "\033[32m" << (e.value_get() ? "true" : "false") << "\033[0m";
   }
 
   void CLIPrinter::operator()(const StringValue& e) {

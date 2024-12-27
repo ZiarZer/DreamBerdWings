@@ -18,6 +18,10 @@ namespace runtime {
     current_value_ = new NumberValue(e.value_get());
   }
 
+  void Evaluator::operator()(const BoolExp& e) {
+    current_value_ = new BoolValue(e.value_get());
+  }
+
   void Evaluator::operator()(const StringExp& e) {
     current_value_ = new StringValue(e.value_get());
   }

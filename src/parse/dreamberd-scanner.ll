@@ -123,6 +123,15 @@ funckw          (fu?n?c?t?i?o?n)|(un?c?t?i?o?n?)|(nc?t?i?o?n?)|(ct?i?o?n?)|(ti?o
 "undefined" {
                 return parse::DreamBerdParser::make_UNDEFINED(driver_.get_location());
             }
+"true" {
+                return parse::DreamBerdParser::make_TRUE(driver_.get_location());
+            }
+"false"     {
+                return parse::DreamBerdParser::make_FALSE(driver_.get_location());
+            }
+"maybe"     {
+                return parse::DreamBerdParser::make_MAYBE(driver_.get_location());
+            }
 "if"        {
                 return parse::DreamBerdParser::make_IF(driver_.get_location());
             }

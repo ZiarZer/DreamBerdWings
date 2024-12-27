@@ -10,6 +10,7 @@ namespace ast {
     virtual void operator()(const Ast& e);
     virtual void operator()(const NullExp&) = 0;
     virtual void operator()(const NumberExp&) = 0;
+    virtual void operator()(const BoolExp&) = 0;
     virtual void operator()(const StringExp&) = 0;
     virtual void operator()(const UnaryOpExp&) = 0;
     virtual void operator()(const BinaryOpExp&) = 0;

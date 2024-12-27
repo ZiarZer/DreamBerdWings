@@ -5,6 +5,7 @@ namespace ast {
   class Exp;
   class NullExp;
   class NumberExp;
+  class BoolExp;
   class StringExp;
   class ArrayExp;
   class ObjectExp;

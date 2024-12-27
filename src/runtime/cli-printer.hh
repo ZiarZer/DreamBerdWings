@@ -14,6 +14,7 @@ namespace runtime {
     void operator()(const NullValue&) override;
     void operator()(const UndefinedValue&) override;
     void operator()(const NumberValue& e) override;
+    void operator()(const BoolValue&) override;
     void operator()(const StringValue& e) override;
     void operator()(const ObjectValue& e) override;
 

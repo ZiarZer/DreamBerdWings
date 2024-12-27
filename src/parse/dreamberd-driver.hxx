@@ -15,6 +15,10 @@ namespace parse {
     return new ast::NumberExp(location, value);
   }
 
+  inline ast::BoolExp* DreamBerdDriver::make_BoolExp(const parse::location& location, bool value) const {
+    return new ast::BoolExp(location, value);
+  }
+
   inline ast::StringExp* DreamBerdDriver::make_StringExp(const parse::location& location, std::string value) const {
     return new ast::StringExp(location, value);
   }

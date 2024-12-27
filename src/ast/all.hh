@@ -4,6 +4,7 @@
 #include "ast.hh"
 #include "await-exp.hh"
 #include "binary-op-exp.hh"
+#include "bool-exp.hh"
 #include "call-exp.hh"
 #include "compound-statement.hh"
 #include "delete-statement.hh"

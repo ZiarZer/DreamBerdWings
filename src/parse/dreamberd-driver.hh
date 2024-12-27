@@ -31,6 +31,7 @@ namespace parse {
 
     ast::NullExp* make_NullExp(const parse::location& location) const;
     ast::NumberExp* make_NumberExp(const parse::location& location, float value) const;
+    ast::BoolExp* make_BoolExp(const parse::location& location, bool value) const;
     ast::StringExp* make_StringExp(const parse::location& location, std::string value) const;
     ast::ArrayExp* make_ArrayExp(const parse::location& location, std::vector<ast::Exp*>* elems) const;
     ast::ObjectExp* make_ObjectExp(const parse::location& location,
