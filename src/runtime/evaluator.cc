@@ -44,7 +44,16 @@ namespace runtime {
 
   void Evaluator::operator()(const CompoundStatement& e) {}
 
-  void Evaluator::operator()(const IfStatement& e) {}
+  void Evaluator::operator()(const IfStatement& e) {
+    Statement* else_clause = e.else_clause_get();
+    if (evaluate(e.condition_get())->is_truthy()) {
+      e.then_clause_get()->accept(*this);
+    } else if (else_clause) {
+      e.else_clause_get()->accept(*this);
+    } else {
+      current_value_ = new UndefinedValue();
+    }
+  }
 
   void Evaluator::operator()(const WhenStatement& e) {}
 

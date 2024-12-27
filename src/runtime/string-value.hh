@@ -12,6 +12,7 @@ namespace runtime {
     StringValue& operator=(const StringValue&) = delete;
 
     std::string value_get() const;
+    bool is_truthy(void) const override;
 
     void accept(Visitor& v) const override;
 

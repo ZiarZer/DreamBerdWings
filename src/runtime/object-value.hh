@@ -12,6 +12,7 @@ namespace runtime {
     ObjectValue& operator=(const ObjectValue&) = delete;
 
     std::map<std::string, Value*> properties_get() const;
+    bool is_truthy(void) const override;
 
     void accept(Visitor& v) const override;
 

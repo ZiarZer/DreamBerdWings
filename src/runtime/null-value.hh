@@ -10,6 +10,10 @@ namespace runtime {
     NullValue(const NullValue&) = delete;
     NullValue& operator=(const NullValue&) = delete;
 
+    bool is_truthy(void) const override;
+
     void accept(Visitor& v) const override;
   };
 } // namespace runtime
+
+#include "null-value.hxx"

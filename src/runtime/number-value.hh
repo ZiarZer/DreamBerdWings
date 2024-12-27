@@ -11,6 +11,7 @@ namespace runtime {
     NumberValue& operator=(const NumberValue&) = delete;
 
     float value_get() const;
+    bool is_truthy(void) const override;
 
     void accept(Visitor& v) const override;
 
