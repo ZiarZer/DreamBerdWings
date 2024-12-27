@@ -30,7 +30,15 @@ namespace runtime {
 
   void Evaluator::operator()(const UnaryOpExp& e) {}
 
-  void Evaluator::operator()(const ArrayExp& e) {}
+  void Evaluator::operator()(const ArrayExp& e) {
+    std::vector<Value*> values = std::vector<Value*>();
+
+    for (ast::Exp* elem : *(e.elems_get())) {
+      values.push_back(evaluate(elem));
+    }
+
+    current_value_ = new ObjectValue(values);
+  }
 
   void Evaluator::operator()(const ObjectExp& e) {
     std::map<std::string, Value*> final_keyvalues = std::map<std::string, Value*>();
@@ -53,7 +61,11 @@ namespace runtime {
 
   void Evaluator::operator()(const FunDecStatement& e) {}
 
-  void Evaluator::operator()(const CompoundStatement& e) {}
+  void Evaluator::operator()(const CompoundStatement& e) {
+    for (Statement* statement : *(e.statements_get())) {
+      statement->accept(*this);
+    }
+  }
 
   void Evaluator::operator()(const IfStatement& e) {
     Statement* else_clause = e.else_clause_get();

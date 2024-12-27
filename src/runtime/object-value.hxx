@@ -10,4 +10,8 @@ namespace runtime {
   inline bool ObjectValue::is_truthy(void) const {
     return true;
   }
+
+  inline bool ObjectValue::is_array_get() const {
+    return is_array_;
+  }
 } // namespace runtime

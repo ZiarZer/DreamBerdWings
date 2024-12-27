@@ -1,6 +1,7 @@
 #pragma once
 
 #include <ostream>
+#include "../utils/utils.hh"
 #include "visitor.hh"
 
 namespace runtime {

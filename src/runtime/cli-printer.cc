@@ -23,10 +23,14 @@ namespace runtime {
   }
 
   void CLIPrinter::operator()(const ObjectValue& e) {
-    stream_ << '{';
+    stream_ << (e.is_array_get() ? '[' : '{');
 
     bool is_first_keyval = true;
     std::map<std::string, Value*> properties = e.properties_get();
+    if (!properties.empty()) {
+      stream_ << ' ';
+    }
+
     for (auto it = properties.begin(); it != properties.end(); it++) {
       if (is_first_keyval) {
         is_first_keyval = false;
@@ -34,11 +38,16 @@ namespace runtime {
         stream_ << ", ";
       }
 
-      stream_ << it->first << ": ";
+      if (!e.is_array_get() || !utils::is_number(it->first)) {
+        stream_ << it->first << ": ";
+      }
       it->second->accept(*this);
     }
 
-    stream_ << '}';
+    if (!properties.empty()) {
+      stream_ << ' ';
+    }
+    stream_ << (e.is_array_get() ? ']' : '}');
   }
 
   std::ostream& operator<<(std::ostream& stream, const Value& val) {
