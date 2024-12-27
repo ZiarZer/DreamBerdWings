@@ -10,6 +10,8 @@ namespace runtime {
     Value& operator=(const Value&) = delete;
 
     virtual bool is_truthy(void) const = 0;
+    virtual Value* operator-() const = 0;
+    virtual Value* operator!() const = 0;
 
     virtual void accept(Visitor& v) const = 0;
   };

@@ -15,6 +15,8 @@ namespace runtime {
     std::map<std::string, Value*> properties_get() const;
     bool is_array_get() const;
     bool is_truthy(void) const override;
+    Value* operator-(void) const override;
+    Value* operator!(void) const override;
 
     void accept(Visitor& v) const override;
 

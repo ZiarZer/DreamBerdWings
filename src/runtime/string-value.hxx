@@ -1,5 +1,7 @@
 #pragma once
 
+#include "bool-value.hh"
+#include "number-value.hh"
 #include "string-value.hh"
 
 namespace runtime {
@@ -9,5 +11,13 @@ namespace runtime {
 
   inline bool StringValue::is_truthy(void) const {
     return value_.length() > 0;
+  }
+
+  inline Value* StringValue::operator-() const {
+    return value_.length() ? new NumberValue() : new NumberValue(0);
+  }
+
+  inline Value* StringValue::operator!() const {
+    return new BoolValue(value_.length() != 0);
   }
 } // namespace runtime

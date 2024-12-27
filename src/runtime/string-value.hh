@@ -13,6 +13,8 @@ namespace runtime {
 
     std::string value_get() const;
     bool is_truthy(void) const override;
+    Value* operator-(void) const override;
+    Value* operator!(void) const override;
 
     void accept(Visitor& v) const override;
 

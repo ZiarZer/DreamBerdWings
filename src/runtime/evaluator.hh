@@ -4,6 +4,7 @@
 #include "../ast/all.hh"
 #include "../ast/visitor.hh"
 #include "all.hh"
+#include "value.hh"
 
 namespace runtime {
   using namespace ast;

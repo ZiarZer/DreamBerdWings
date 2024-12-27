@@ -11,6 +11,8 @@ namespace runtime {
     NullValue& operator=(const NullValue&) = delete;
 
     bool is_truthy(void) const override;
+    Value* operator-(void) const override;
+    Value* operator!(void) const override;
 
     void accept(Visitor& v) const override;
   };

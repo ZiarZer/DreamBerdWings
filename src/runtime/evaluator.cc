@@ -32,7 +32,32 @@ namespace runtime {
 
   void Evaluator::operator()(const BinaryOpExp& e) {}
 
-  void Evaluator::operator()(const UnaryOpExp& e) {}
+  void Evaluator::operator()(const UnaryOpExp& e) {
+    switch (e.operation_get()) {
+    case UnaryOpExp::Oper::minus:
+      current_value_ = -*evaluate(e.operand_get());
+      break;
+    case UnaryOpExp::Oper::_not:
+      current_value_ = !*evaluate(e.operand_get());
+      break;
+    case UnaryOpExp::Oper::preincrement:
+      // TODO: increment operand
+      current_value_ = evaluate(e.operand_get());
+      break;
+    case UnaryOpExp::Oper::predecrement:
+      // TODO: decrement operand
+      current_value_ = evaluate(e.operand_get());
+      break;
+    case UnaryOpExp::Oper::postincrement:
+      current_value_ = evaluate(e.operand_get());
+      // TODO: increment operand
+      break;
+    case UnaryOpExp::Oper::postdecrement:
+      current_value_ = evaluate(e.operand_get());
+      // TODO: decrement operand
+      break;
+    }
+  }
 
   void Evaluator::operator()(const ArrayExp& e) {
     std::vector<Value*> values = std::vector<Value*>();
