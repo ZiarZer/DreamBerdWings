@@ -25,8 +25,15 @@ namespace runtime {
   void CLIPrinter::operator()(const ObjectValue& e) {
     stream_ << '{';
 
+    bool is_first_keyval = true;
     std::map<std::string, Value*> properties = e.properties_get();
     for (auto it = properties.begin(); it != properties.end(); it++) {
+      if (is_first_keyval) {
+        is_first_keyval = false;
+      } else {
+        stream_ << ", ";
+      }
+
       stream_ << it->first << ": ";
       it->second->accept(*this);
     }

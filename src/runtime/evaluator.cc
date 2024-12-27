@@ -32,7 +32,16 @@ namespace runtime {
 
   void Evaluator::operator()(const ArrayExp& e) {}
 
-  void Evaluator::operator()(const ObjectExp& e) {}
+  void Evaluator::operator()(const ObjectExp& e) {
+    std::map<std::string, Value*> final_keyvalues = std::map<std::string, Value*>();
+
+    auto keyvalues = e.keyvalues_get();
+    for (auto it = keyvalues->begin(); it != keyvalues->end(); it++) {
+      final_keyvalues[it->first] = evaluate(it->second);
+    }
+
+    current_value_ = new ObjectValue(final_keyvalues);
+  }
 
   void Evaluator::operator()(const ExpStatement& e) {
     e.expression_get()->accept(*this);
