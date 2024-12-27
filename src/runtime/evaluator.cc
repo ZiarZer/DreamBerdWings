@@ -47,7 +47,9 @@ namespace runtime {
     e.expression_get()->accept(*this);
   }
 
-  void Evaluator::operator()(const VarDecStatement& e) {}
+  void Evaluator::operator()(const VarDecStatement& e) {
+    e.vardec_get()->accept(*this);
+  }
 
   void Evaluator::operator()(const FunDecStatement& e) {}
 
@@ -74,17 +76,36 @@ namespace runtime {
 
   void Evaluator::operator()(const EmptyStatement& e) {}
 
-  void Evaluator::operator()(const SimpleVar& e) {}
+  void Evaluator::operator()(const SimpleVar& e) {
+    Value* variable_value = variables_[e.name_get()];
+    current_value_ = variable_value ? variable_value : new StringValue(e.name_get());
+  }
 
   void Evaluator::operator()(const SubscriptVar& e) {}
 
-  void Evaluator::operator()(const PropertyVar& e) {}
+  void Evaluator::operator()(const PropertyVar& e) {
+    ObjectValue* main_var_value = dynamic_cast<ObjectValue*>(evaluate(e.var_get()));
+    if (!main_var_value) {
+      current_value_ = new UndefinedValue();
+    } else {
+      auto properties = main_var_value->properties_get();
+      try {
+        current_value_ = properties[e.property_get()];
+      } catch (const std::out_of_range& e) {
+        current_value_ = new UndefinedValue();
+      }
+    }
+  }
 
   void Evaluator::operator()(const TimeWatchVar& e) {}
 
   void Evaluator::operator()(const CallExp& e) {}
 
-  void Evaluator::operator()(const VariableDec& e) {}
+  void Evaluator::operator()(const VariableDec& e) {
+    Exp* init = e.init_get();
+    variables_[e.name_get()] = init ? evaluate(init) : new UndefinedValue();
+    current_value_ = new UndefinedValue();
+  }
 
   void Evaluator::operator()(const GlobalConstantDec& e) {}
 

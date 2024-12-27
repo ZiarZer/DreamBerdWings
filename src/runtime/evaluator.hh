@@ -1,5 +1,6 @@
 #pragma once
 
+#include <map>
 #include "../ast/all.hh"
 #include "../ast/visitor.hh"
 #include "all.hh"
@@ -14,6 +15,7 @@ namespace runtime {
     Evaluator(void);
 
     runtime::Value* current_value_get() const;
+    std::map<std::string, Value*> variables_get() const;
 
     runtime::Value* evaluate(Ast* e) const;
 
@@ -47,6 +49,7 @@ namespace runtime {
 
   protected:
     runtime::Value* current_value_;
+    std::map<std::string, Value*> variables_;
   };
 } // namespace runtime
 
