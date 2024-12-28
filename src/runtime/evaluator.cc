@@ -88,11 +88,26 @@ namespace runtime {
     e.vardec_get()->accept(*this);
   }
 
-  void Evaluator::operator()(const FunDecStatement& e) {}
+  void Evaluator::operator()(const FunDecStatement& e) {
+    e.fundec_get()->accept(*this);
+  }
 
   void Evaluator::operator()(const CompoundStatement& e) {
     for (Statement* statement : *(e.statements_get())) {
       statement->accept(*this);
+      if (return_value_) {
+        if (current_function_) {
+          return_value_ = nullptr; // Reset
+          return;
+        } else {
+          // TODO error: return outside of function
+        }
+      }
+    }
+
+    // Functions with no return statement returns undefined
+    if (current_function_) {
+      current_value_ = new UndefinedValue();
     }
   }
 
@@ -113,7 +128,10 @@ namespace runtime {
 
   void Evaluator::operator()(const DeleteStatement& e) {}
 
-  void Evaluator::operator()(const ReturnStatement& e) {}
+  void Evaluator::operator()(const ReturnStatement& e) {
+    return_value_ = evaluate(e.expression_get());
+    current_value_ = return_value_;
+  }
 
   void Evaluator::operator()(const EmptyStatement& e) {}
 
@@ -140,7 +158,27 @@ namespace runtime {
 
   void Evaluator::operator()(const TimeWatchVar& e) {}
 
-  void Evaluator::operator()(const CallExp& e) {}
+  void Evaluator::operator()(const CallExp& e) {
+    FunctionValue* function_value = dynamic_cast<FunctionValue*>(evaluate(e.callee_get()));
+    if (function_value) {
+      // TODO: add scopes
+      int param_index = 0;
+      auto fundec = function_value->function_dec_get();
+      auto args = fundec->args_get();
+      auto params = e.params_get();
+
+      for (VariableDec* vardec : *args) {
+        Exp* param = (param_index < args->size()) ? (*params)[param_index++] : new UndefinedExp(e.location_get());
+        evaluate(new VariableDec(vardec->location_get(), vardec->name_get(), param, true, true));
+      }
+
+      current_function_ = fundec;
+      return_value_ = nullptr;
+      fundec->body_get()->accept(*this);
+    } else {
+      current_value_ = new UndefinedValue();
+    }
+  }
 
   void Evaluator::operator()(const VariableDec& e) {
     Exp* init = e.init_get();
@@ -150,7 +188,10 @@ namespace runtime {
 
   void Evaluator::operator()(const GlobalConstantDec& e) {}
 
-  void Evaluator::operator()(const FunctionDec& e) {}
+  void Evaluator::operator()(const FunctionDec& e) {
+    variables_[e.name_get()] = new FunctionValue(&e);
+    current_value_ = new UndefinedValue();
+  }
 
   void Evaluator::operator()(const Punctuation& e) {}
 } // namespace runtime

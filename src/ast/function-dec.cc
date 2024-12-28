@@ -4,7 +4,7 @@ namespace ast {
   FunctionDec::FunctionDec(const Location& location,
                            std::string name,
                            std::vector<VariableDec*>* args,
-                           Statement* body,
+                           CompoundStatement* body,
                            bool is_async)
     : Dec(location, name)
     , args_(args)

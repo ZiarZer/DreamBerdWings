@@ -1,6 +1,7 @@
 #pragma once
 
 #include "bool-value.hh"
+#include "function-value.hh"
 #include "null-value.hh"
 #include "number-value.hh"
 #include "object-value.hh"

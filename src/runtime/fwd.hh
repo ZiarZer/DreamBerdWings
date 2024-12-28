@@ -8,6 +8,7 @@ namespace runtime {
   class BoolValue;
   class StringValue;
   class ObjectValue;
+  class FunctionValue;
 
   class Visitor;
 } // namespace runtime

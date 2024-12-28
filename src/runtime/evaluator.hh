@@ -52,6 +52,8 @@ namespace runtime {
   protected:
     runtime::Value* current_value_;
     std::map<std::string, Value*> variables_;
+    const ast::FunctionDec* current_function_;
+    runtime::Value* return_value_;
   };
 } // namespace runtime
 

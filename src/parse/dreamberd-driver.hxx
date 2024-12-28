@@ -161,7 +161,7 @@ namespace parse {
   inline ast::FunctionDec* DreamBerdDriver::make_FunctionDec(const parse::location& location,
                                                              std::string name,
                                                              std::vector<ast::VariableDec*>* args,
-                                                             ast::Statement* body,
+                                                             ast::CompoundStatement* body,
                                                              bool is_async) const {
     return new ast::FunctionDec(location, name, args, body, is_async);
   }

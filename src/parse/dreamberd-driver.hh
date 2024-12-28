@@ -82,7 +82,7 @@ namespace parse {
     ast::FunctionDec* make_FunctionDec(const parse::location& location,
                                        std::string name,
                                        std::vector<ast::VariableDec*>* args,
-                                       ast::Statement* body,
+                                       ast::CompoundStatement* body,
                                        bool is_async) const;
     ast::GlobalConstantDec*
     make_GlobalConstantDec(const parse::location& location, std::string name, ast::Exp* init) const;

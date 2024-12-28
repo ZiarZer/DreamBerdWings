@@ -60,6 +60,10 @@ namespace runtime {
     stream_ << (e.is_array_get() ? ']' : '}');
   }
 
+  void CLIPrinter::operator()(const FunctionValue& e) {
+    stream_ << "\033[36m[Function: " << e.function_dec_get()->name_get() << "]";
+  }
+
   std::ostream& operator<<(std::ostream& stream, const Value& val) {
     CLIPrinter print(stream);
     print(val);

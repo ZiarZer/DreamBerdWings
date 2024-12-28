@@ -7,7 +7,7 @@ namespace ast {
     return args_;
   }
 
-  inline Statement* FunctionDec::body_get() const {
+  inline CompoundStatement* FunctionDec::body_get() const {
     return body_;
   }
 
