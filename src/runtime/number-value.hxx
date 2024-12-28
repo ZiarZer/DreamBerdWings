@@ -1,11 +1,14 @@
 #pragma once
 
+#include <sstream>
 #include "bool-value.hh"
 #include "number-value.hh"
 
 namespace runtime {
   inline std::string NumberValue::to_string() const {
-    return std::to_string(value_);
+    std::ostringstream stream;
+    stream << value_;
+    return stream.str();
   }
 
   inline float NumberValue::value_get() const {
