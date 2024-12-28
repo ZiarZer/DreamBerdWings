@@ -3,7 +3,9 @@
 namespace runtime {
   Evaluator::Evaluator(void)
     : ast::Visitor()
-    , current_value_(nullptr) {
+    , current_value_(nullptr)
+    , current_function_(nullptr)
+    , return_value_(nullptr) {
     variables_ = std::map<std::string, Value*>();
     variables_["print"] = new BuiltinValue("print");
   }
@@ -132,8 +134,12 @@ namespace runtime {
   void Evaluator::operator()(const DeleteStatement& e) {}
 
   void Evaluator::operator()(const ReturnStatement& e) {
-    return_value_ = evaluate(e.expression_get());
-    current_value_ = return_value_;
+    if (!current_function_) {
+      throw new std::domain_error("return outside of function");
+    } else {
+      return_value_ = evaluate(e.expression_get());
+      current_value_ = return_value_;
+    }
   }
 
   void Evaluator::operator()(const EmptyStatement& e) {}
