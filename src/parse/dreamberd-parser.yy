@@ -94,7 +94,7 @@
 %type <std::vector<ast::Statement*>*> statements statements.1;
 %type <ast::Punctuation*> punctuation;
 %type <int> BANGS QUESTIONS
-%type <std::string> ID
+%type <std::string> ID FUNCTION CLASS id
 
 %start program
 
@@ -170,8 +170,8 @@ exps.1:
   ;
 
 keyvalue:
-    ID ":" exp { $$ = std::make_pair<std::string, ast::Exp*>(std::string($1), std::move($3)); }
-  | ID { $$ = std::make_pair<std::string, ast::Exp*>(std::string($1), driver.make_SimpleVar(@$, $1)); }
+    id ":" exp { $$ = std::make_pair<std::string, ast::Exp*>(std::string($1), std::move($3)); }
+  | id { $$ = std::make_pair<std::string, ast::Exp*>(std::string($1), driver.make_SimpleVar(@$, $1)); }
   ;
 keyvalues:
     %empty { $$ = driver.make_keyvalues(); }
@@ -183,32 +183,37 @@ keyvalues.1:
   ;
 
 lvalue:
-    ID { $$ = driver.make_SimpleVar(@$, $1); }
+    id { $$ = driver.make_SimpleVar(@$, $1); }
   | lvalue "[" exp "]" { $$ = driver.make_SubscriptVar(@$, $1, $3); }
-  | lvalue "." ID { $$ = driver.make_PropertyVar(@$, $1, $3); }
+  | lvalue "." id { $$ = driver.make_PropertyVar(@$, $1, $3); }
+  ;
+id:
+    ID { $$ = $1; }
+  | FUNCTION { $$ = $1; }
+  | CLASS { $$ = $1; }
   ;
 
 vardec:
-    "var" "const" ID { $$ = driver.make_VariableDec(@$, $3, nullptr, true, false); }
-  | "var" "var" ID { $$ = driver.make_VariableDec(@$, $3, nullptr, true, true); }
-  | "const" "const" ID "=" exp { $$ = driver.make_VariableDec(@$, $3, $5, false, false); }
-  | "const" "var" ID "=" exp { $$ = driver.make_VariableDec(@$, $3, $5, false, true); }
-  | "var" "const" ID "=" exp { $$ = driver.make_VariableDec(@$, $3, $5, true, false); }
-  | "var" "var" ID "=" exp { $$ = driver.make_VariableDec(@$, $3, $5, true, true); }
-  | "const" "const" "const" ID "=" exp { $$ = driver.make_GlobalConstantDec(@$, $4, $6); }
+    "var" "const" id { $$ = driver.make_VariableDec(@$, $3, nullptr, true, false); }
+  | "var" "var" id { $$ = driver.make_VariableDec(@$, $3, nullptr, true, true); }
+  | "const" "const" id "=" exp { $$ = driver.make_VariableDec(@$, $3, $5, false, false); }
+  | "const" "var" id "=" exp { $$ = driver.make_VariableDec(@$, $3, $5, false, true); }
+  | "var" "const" id "=" exp { $$ = driver.make_VariableDec(@$, $3, $5, true, false); }
+  | "var" "var" id "=" exp { $$ = driver.make_VariableDec(@$, $3, $5, true, true); }
+  | "const" "const" "const" id "=" exp { $$ = driver.make_GlobalConstantDec(@$, $4, $6); }
   ;
 
 fundec:
-    FUNCTION ID "(" args ")" "=>" LBRACE statements RBRACE { $$ = driver.make_FunctionDec(@$, $2, $4, driver.make_CompoundStatement(@$, $8), false); }
-  | ASYNC FUNCTION ID "(" args ")" "=>" LBRACE statements RBRACE { $$ = driver.make_FunctionDec(@$, $3, $5, driver.make_CompoundStatement(@$, $9), true); }
+    FUNCTION id "(" args ")" "=>" LBRACE statements RBRACE { $$ = driver.make_FunctionDec(@$, $2, $4, driver.make_CompoundStatement(@$, $8), false); }
+  | ASYNC FUNCTION id "(" args ")" "=>" LBRACE statements RBRACE { $$ = driver.make_FunctionDec(@$, $3, $5, driver.make_CompoundStatement(@$, $9), true); }
   ;
 args:
     %empty { $$ = driver.make_args(); }
   | args.1 { $$ = $1; }
   ;
 args.1:
-    ID { $$ = driver.make_args(driver.make_VariableDec(@$, $1, nullptr, true, true)); }
-  | args.1 ID { $$ = $1; $$->push_back(driver.make_VariableDec(@$, $2, nullptr, true, true)); }
+    id { $$ = driver.make_args(driver.make_VariableDec(@$, $1, nullptr, true, true)); }
+  | args.1 id { $$ = $1; $$->push_back(driver.make_VariableDec(@$, $2, nullptr, true, true)); }
   ;
 %%
 

@@ -15,7 +15,7 @@
 
 int             [0-9]+\.?
 float           [0-9]*\.[0-9]+
-id              [a-zA-Z0-9]+
+id              [^-"' \n\t!?¡+*/^=.,:;\()\[\]{}]+
 classkw         class(Name)?
 funckw          (fu?n?c?t?i?o?n)|(un?c?t?i?o?n?)|(nc?t?i?o?n?)|(ct?i?o?n?)|(ti?o?n?)|(io?n?)|(on?)
 
@@ -172,10 +172,10 @@ funckw          (fu?n?c?t?i?o?n)|(un?c?t?i?o?n?)|(nc?t?i?o?n?)|(ct?i?o?n?)|(ti?o
                 return parse::DreamBerdParser::make_VAR(driver_.get_location());
             }
 {funckw}    {
-                return parse::DreamBerdParser::make_FUNCTION(driver_.get_location());
+                return parse::DreamBerdParser::make_FUNCTION(yytext, driver_.get_location());
             }
 {classkw}   {
-                return parse::DreamBerdParser::make_CLASS(driver_.get_location());
+                return parse::DreamBerdParser::make_CLASS(yytext, driver_.get_location());
             }
 "=>"        {
                 return parse::DreamBerdParser::make_ARROW(driver_.get_location());
