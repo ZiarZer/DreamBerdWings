@@ -87,6 +87,24 @@ funckw          (fu?n?c?t?i?o?n)|(un?c?t?i?o?n?)|(nc?t?i?o?n?)|(ct?i?o?n?)|(ti?o
 "="         {
                 return parse::DreamBerdParser::make_EQ(driver_.get_location());
             }
+"=="        {
+                return parse::DreamBerdParser::make_DOUBLEQ(driver_.get_location());
+            }
+"==="       {
+                return parse::DreamBerdParser::make_TRIPLEQ(driver_.get_location());
+            }
+"===="      {
+                return parse::DreamBerdParser::make_QUADRUPLEQ(driver_.get_location());
+            }
+"!="        {
+                return parse::DreamBerdParser::make_DOUBLNEQ(driver_.get_location());
+            }
+"!=="       {
+                return parse::DreamBerdParser::make_TRIPLNEQ(driver_.get_location());
+            }
+"!==="      {
+                return parse::DreamBerdParser::make_QUADRUPLNEQ(driver_.get_location());
+            }
 "."         {
                 return parse::DreamBerdParser::make_DOT(driver_.get_location());
             }

@@ -205,6 +205,8 @@ namespace runtime {
     }
   }
 
+  void Evaluator::operator()(const AssignExp& e) {}
+
   void Evaluator::operator()(const VariableDec& e) {
     Exp* init = e.init_get();
     variables_[e.name_get()] = init ? evaluate(init) : new UndefinedValue();

@@ -81,6 +81,11 @@ namespace parse {
     return new ast::CallExp(location, callee, params);
   }
 
+  inline ast::AssignExp*
+  DreamBerdDriver::make_AssignExp(const parse::location& location, ast::Var* lvalue, ast::Exp* expression) const {
+    return new ast::AssignExp(location, lvalue, expression);
+  }
+
   inline ast::Punctuation*
   DreamBerdDriver::make_Punctuation(const parse::location& location, char type, int count) const {
     return new ast::Punctuation(location, type, count);

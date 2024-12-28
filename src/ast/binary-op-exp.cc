@@ -19,6 +19,20 @@ namespace ast {
       return "/";
     case BinaryOpExp::Oper::pow:
       return "^";
+    case BinaryOpExp::Oper::lt:
+      return "<";
+    case BinaryOpExp::Oper::leq:
+      return "<=";
+    case BinaryOpExp::Oper::gt:
+      return ">";
+    case BinaryOpExp::Oper::geq:
+      return ">=";
+    case BinaryOpExp::Oper::eq:
+      return "==";
+    case BinaryOpExp::Oper::preciseeq:
+      return "===";
+    case BinaryOpExp::Oper::issame:
+      return "====";
     default:
       return "";
     }

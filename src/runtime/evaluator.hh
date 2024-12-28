@@ -34,6 +34,7 @@ namespace runtime {
     void operator()(const PropertyVar& e) override;
     void operator()(const TimeWatchVar& e) override;
     void operator()(const CallExp& e) override;
+    void operator()(const AssignExp& e) override;
     void operator()(const Punctuation& e) override;
     void operator()(const ExpStatement& e) override;
     void operator()(const VarDecStatement& e) override;

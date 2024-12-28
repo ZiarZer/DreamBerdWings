@@ -1,6 +1,7 @@
 #pragma once
 
 #include "array-exp.hh"
+#include "assign-exp.hh"
 #include "ast.hh"
 #include "await-exp.hh"
 #include "binary-op-exp.hh"

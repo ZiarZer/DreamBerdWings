@@ -61,6 +61,16 @@
        CLASS "class"
        ARROW "=>"
        EQ "="
+       DOUBLEQ "=="
+       TRIPLEQ "==="
+       QUADRUPLEQ "===="
+       DOUBLNEQ "!="
+       TRIPLNEQ "!=="
+       QUADRUPLNEQ "!==="
+       LT "<"
+       LEQ "<="
+       GT ">"
+       GEQ ">="
        DOT "."
        COMA ","
        COLON ":"
@@ -76,6 +86,8 @@
 %token <float> NUMBER "number";
 %token <std::string> STRING "string";
 %token BANGS QUESTIONS
+%precedence EQ
+%nonassoc DOUBLEQ DOUBLNEQ TRIPLNEQ TRIPLEQ QUADRUPLEQ QUADRUPLNEQ LT LEQ GT GEQ
 %left ADD "+" SUB "-";
 %left MUL "*" DIV "/";
 %left POW "^";
@@ -147,6 +159,13 @@ exp:
   | exp MUL exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::mul, $3); }
   | exp DIV exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::div, $3); }
   | exp POW exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::pow, $3); }
+  | exp "<" exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::lt, $3); }
+  | exp "<=" exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::leq, $3); }
+  | exp ">" exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::gt, $3); }
+  | exp ">=" exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::geq, $3); }
+  | exp "==" exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::eq, $3); }
+  | exp "===" exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::preciseeq, $3); }
+  | exp "====" exp { $$ = driver.make_BinaryOpExp(@$, $1, ast::BinaryOpExp::Oper::issame, $3); }
   | NOT exp { $$ = driver.make_UnaryOpExp(@$, $2, ast::UnaryOpExp::Oper::_not); }
   | SUB exp { $$ = driver.make_UnaryOpExp(@$, $2, ast::UnaryOpExp::Oper::minus); }
   | INCREMENT exp { $$ = driver.make_UnaryOpExp(@$, $2, ast::UnaryOpExp::Oper::preincrement); }
@@ -154,6 +173,7 @@ exp:
   | exp INCREMENT { $$ = driver.make_UnaryOpExp(@$, $1, ast::UnaryOpExp::Oper::postincrement); }
   | exp DECREMENT { $$ = driver.make_UnaryOpExp(@$, $1, ast::UnaryOpExp::Oper::postdecrement); }
   | AWAIT exp { $$ = driver.make_AwaitExp(@$, $2); }
+  | lvalue "=" exp { $$ = driver.make_AssignExp(@$, $1, $3); }
   | lvalue { $$ = $1; }
   | PREVIOUS lvalue { $$ = driver.make_TimeWatchVar(@$, $2, ast::TimeWatchVar::Time::past); }
   | CURRENT lvalue { $$ = driver.make_TimeWatchVar(@$, $2, ast::TimeWatchVar::Time::present); }

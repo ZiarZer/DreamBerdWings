@@ -22,6 +22,7 @@ namespace ast {
     virtual void operator()(const PropertyVar&) = 0;
     virtual void operator()(const TimeWatchVar&) = 0;
     virtual void operator()(const CallExp&) = 0;
+    virtual void operator()(const AssignExp& e) = 0;
     virtual void operator()(const Punctuation&) = 0;
     virtual void operator()(const ExpStatement&) = 0;
     virtual void operator()(const VarDecStatement&) = 0;

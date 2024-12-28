@@ -50,6 +50,7 @@ namespace parse {
     ast::TimeWatchVar*
     make_TimeWatchVar(const parse::location& location, ast::Var* var, ast::TimeWatchVar::Time time) const;
     ast::CallExp* make_CallExp(const parse::location& location, ast::Var* callee, std::vector<ast::Exp*>* params) const;
+    ast::AssignExp* make_AssignExp(const parse::location& location, ast::Var* lvalue, ast::Exp* expression) const;
     ast::Punctuation* make_Punctuation(const parse::location& location, char type, int count) const;
     ast::ExpStatement*
     make_ExpStatement(const parse::location& location, ast::Exp* expression, ast::Punctuation* punctuation) const;
