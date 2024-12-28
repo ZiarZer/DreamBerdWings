@@ -5,6 +5,10 @@
 #include "number-value.hh"
 
 namespace runtime {
+  inline std::string NullValue::to_string() const {
+    return "null";
+  }
+
   inline bool NullValue::is_truthy(void) const {
     return false;
   }

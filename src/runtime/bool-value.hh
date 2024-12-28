@@ -10,6 +10,7 @@ namespace runtime {
     BoolValue& operator=(const BoolValue&) = delete;
 
     bool value_get() const;
+    std::string to_string() const override;
     bool is_truthy(void) const override;
     Value* operator-(void) const override;
     Value* operator!(void) const override;

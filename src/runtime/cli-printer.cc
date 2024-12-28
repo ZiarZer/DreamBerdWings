@@ -61,7 +61,11 @@ namespace runtime {
   }
 
   void CLIPrinter::operator()(const FunctionValue& e) {
-    stream_ << "\033[36m[Function: " << e.function_dec_get()->name_get() << "]";
+    stream_ << "\033[36m[Function: " << e.function_dec_get()->name_get() << "]\033[0m";
+  }
+
+  void CLIPrinter::operator()(const BuiltinValue& e) {
+    stream_ << "\033[36m[Function: " << e.func_name_get() << "]\033[0m";
   }
 
   std::ostream& operator<<(std::ostream& stream, const Value& val) {

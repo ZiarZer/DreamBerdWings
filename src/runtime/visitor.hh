@@ -15,6 +15,7 @@ namespace runtime {
     virtual void operator()(const BoolValue&) = 0;
     virtual void operator()(const ObjectValue&) = 0;
     virtual void operator()(const FunctionValue&) = 0;
+    virtual void operator()(const BuiltinValue&) = 0;
 
     template <typename E> void accept(E* e);
   };

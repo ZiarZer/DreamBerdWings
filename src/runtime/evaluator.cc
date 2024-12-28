@@ -3,7 +3,10 @@
 namespace runtime {
   Evaluator::Evaluator(void)
     : ast::Visitor()
-    , current_value_(nullptr) {}
+    , current_value_(nullptr) {
+    variables_ = std::map<std::string, Value*>();
+    variables_["print"] = new BuiltinValue("print");
+  }
 
   runtime::Value* Evaluator::evaluate(Ast* e) const {
     e->accept((*(ast::Visitor*)this));
@@ -159,7 +162,8 @@ namespace runtime {
   void Evaluator::operator()(const TimeWatchVar& e) {}
 
   void Evaluator::operator()(const CallExp& e) {
-    FunctionValue* function_value = dynamic_cast<FunctionValue*>(evaluate(e.callee_get()));
+    Value* callee_value = evaluate(e.callee_get());
+    FunctionValue* function_value = dynamic_cast<FunctionValue*>(callee_value);
     if (function_value) {
       // TODO: add scopes
       int param_index = 0;
@@ -176,7 +180,12 @@ namespace runtime {
       return_value_ = nullptr;
       fundec->body_get()->accept(*this);
     } else {
-      current_value_ = new UndefinedValue();
+      BuiltinValue* builtin_value = dynamic_cast<BuiltinValue*>(callee_value);
+      auto params_values = std::vector<Value*>();
+      for (Exp* param : *e.params_get()) {
+        params_values.push_back(evaluate(param));
+      }
+      current_value_ = builtin_value ? builtin_value->call(params_values) : new UndefinedValue();
     }
   }
 

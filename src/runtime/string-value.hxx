@@ -5,6 +5,10 @@
 #include "string-value.hh"
 
 namespace runtime {
+  inline std::string StringValue::to_string() const {
+    return value_;
+  }
+
   inline std::string StringValue::value_get() const {
     return value_;
   }

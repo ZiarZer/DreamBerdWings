@@ -18,6 +18,7 @@ namespace runtime {
     void operator()(const StringValue& e) override;
     void operator()(const ObjectValue& e) override;
     void operator()(const FunctionValue& e) override;
+    void operator()(const BuiltinValue& e) override;
 
   protected:
     std::ostream& stream_;

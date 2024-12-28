@@ -4,6 +4,10 @@
 #include "number-value.hh"
 
 namespace runtime {
+  inline std::string NumberValue::to_string() const {
+    return std::to_string(value_);
+  }
+
   inline float NumberValue::value_get() const {
     return value_;
   }

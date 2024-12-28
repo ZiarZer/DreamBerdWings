@@ -5,6 +5,10 @@
 #include "object-value.hh"
 
 namespace runtime {
+  inline std::string ObjectValue::to_string() const {
+    return is_array_ ? "[Array object]" : "[Object object]";
+  }
+
   inline std::map<std::string, Value*> ObjectValue::properties_get() const {
     return properties_;
   }

@@ -10,6 +10,7 @@ namespace runtime {
     UndefinedValue(const UndefinedValue&) = delete;
     UndefinedValue& operator=(const UndefinedValue&) = delete;
 
+    std::string to_string() const override;
     bool is_truthy(void) const override;
     Value* operator-(void) const override;
     Value* operator!(void) const override;

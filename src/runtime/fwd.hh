@@ -9,6 +9,7 @@ namespace runtime {
   class StringValue;
   class ObjectValue;
   class FunctionValue;
+  class BuiltinValue;
 
   class Visitor;
 } // namespace runtime

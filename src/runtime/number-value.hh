@@ -13,6 +13,7 @@ namespace runtime {
 
     float value_get() const;
     bool is_NaN_get() const;
+    std::string to_string() const override;
     bool is_truthy(void) const override;
     Value* operator-(void) const override;
     Value* operator!(void) const override;

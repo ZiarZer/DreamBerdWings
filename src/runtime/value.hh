@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include "fwd.hh"
 
 namespace runtime {
@@ -10,6 +11,7 @@ namespace runtime {
     Value& operator=(const Value&) = delete;
 
     virtual bool is_truthy(void) const = 0;
+    virtual std::string to_string() const = 0;
     virtual Value* operator-() const = 0;
     virtual Value* operator!() const = 0;
 

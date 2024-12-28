@@ -10,6 +10,7 @@ namespace runtime {
     NullValue(const NullValue&) = delete;
     NullValue& operator=(const NullValue&) = delete;
 
+    std::string to_string() const override;
     bool is_truthy(void) const override;
     Value* operator-(void) const override;
     Value* operator!(void) const override;

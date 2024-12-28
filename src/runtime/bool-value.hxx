@@ -12,6 +12,10 @@ namespace runtime {
     return value_;
   }
 
+  inline std::string BoolValue::to_string(void) const {
+    return value_ ? "true" : "false";
+  }
+
   inline Value* BoolValue::operator-() const {
     return new NumberValue(value_ ? -1 : 0);
   }
