@@ -149,7 +149,18 @@ namespace runtime {
     current_value_ = variable_value ? variable_value : new StringValue(e.name_get());
   }
 
-  void Evaluator::operator()(const SubscriptVar& e) {}
+  void Evaluator::operator()(const SubscriptVar& e) {
+    ObjectValue* main_var_value = dynamic_cast<ObjectValue*>(evaluate(e.var_get()));
+    if (!main_var_value) {
+      current_value_ = new UndefinedValue();
+    } else {
+      auto properties = main_var_value->properties_get();
+      current_value_ = properties[evaluate(e.index_get())->to_string()];
+      if (!current_value_) {
+        current_value_ = new UndefinedValue();
+      }
+    }
+  }
 
   void Evaluator::operator()(const PropertyVar& e) {
     ObjectValue* main_var_value = dynamic_cast<ObjectValue*>(evaluate(e.var_get()));
@@ -157,9 +168,8 @@ namespace runtime {
       current_value_ = new UndefinedValue();
     } else {
       auto properties = main_var_value->properties_get();
-      try {
-        current_value_ = properties[e.property_get()];
-      } catch (const std::out_of_range& e) {
+      current_value_ = properties[e.property_get()];
+      if (!current_value_) {
         current_value_ = new UndefinedValue();
       }
     }
