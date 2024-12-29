@@ -121,7 +121,6 @@ namespace runtime {
       statement->accept(*this);
       if (return_value_) {
         if (current_function_) {
-          return_value_ = nullptr; // Reset
           break;
         } else {
           // TODO error: return outside of function
@@ -129,11 +128,15 @@ namespace runtime {
       }
     }
     end_scope();
+    if (!return_value_) {
+      return_value_ = new UndefinedValue();
+    }
 
     // Functions with no return statement returns undefined
     if (current_function_) {
-      current_value_ = new UndefinedValue();
+      current_value_ = return_value_;
     }
+    return_value_ = nullptr; // Reset
   }
 
   void Evaluator::operator()(const IfStatement& e) {
