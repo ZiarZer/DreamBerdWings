@@ -5,6 +5,18 @@
 	#define yyterminate() parse::DreamBerdParser::make_EOF(driver_.get_location());
 
 	#define YY_USER_ACTION driver_.step_location(yyleng);
+
+    int count_quotes(std::string s) {
+      int count = 0;
+      for (char c : s) {
+        if (c == '"') {
+          count += 2;}
+        else if (c == '\'') {
+          count += 1;
+        }
+      }
+      return count;
+    }
 %}
 
 %option nodefault
@@ -18,6 +30,7 @@ float           [0-9]*\.[0-9]+
 id              [^-"' \n\t!?¡+*/^=.,:;\()\[\]{}]+
 classkw         class(Name)?
 funckw          (fu?n?c?t?i?o?n)|(un?c?t?i?o?n?)|(nc?t?i?o?n?)|(ct?i?o?n?)|(ti?o?n?)|(io?n?)|(on?)
+quote           ["']
 
 %x SINGLE_LINE_COMMENT_ST MULTILINE_COMMENT_ST STRING_ST
 
@@ -25,6 +38,8 @@ funckw          (fu?n?c?t?i?o?n)|(un?c?t?i?o?n?)|(nc?t?i?o?n?)|(ct?i?o?n?)|(ti?o
 
 %{
     std::string string_accumulator = "";
+    int quotes_nb = 0;
+    int closing_quotes = 0;
 %}
 
 "//"        { BEGIN(SINGLE_LINE_COMMENT_ST); }
@@ -39,12 +54,19 @@ funckw          (fu?n?c?t?i?o?n)|(un?c?t?i?o?n?)|(nc?t?i?o?n?)|(ct?i?o?n?)|(ti?o
     .           {}
     <<EOF>>     { std::cout << driver_.get_location() << "unexpected EOF" << std::endl; }
 }
-"\""          { BEGIN(STRING_ST); }
+{quote}+        { quotes_nb = count_quotes(yytext); BEGIN(STRING_ST); }
 <STRING_ST>{
-    "\\\""      { string_accumulator += "\""; }
-    "\""        {  BEGIN(INITIAL); return parse::DreamBerdParser::make_STRING(string_accumulator, driver_.get_location()); }
-    .           { string_accumulator += yytext; }
-    <<EOF>> {std::cout << driver_.get_location() << "unexpected EOF" << std::endl;}
+    "\\\""      { string_accumulator += "\""; closing_quotes = 0; }
+    "\\\'"      { string_accumulator += "\'"; closing_quotes = 0; }
+    {quote}     {
+                    closing_quotes += yytext[0] == '"' ? 2 : 1;
+                    if (closing_quotes >= quotes_nb) {
+                        BEGIN(INITIAL);
+                        return parse::DreamBerdParser::make_STRING(string_accumulator, driver_.get_location());
+                    }
+                }
+    .           { string_accumulator += yytext; closing_quotes = 0; }
+    <<EOF>> {std::cerr << driver_.get_location() << "unexpected EOF" << std::endl;}
 }
 
 {int}|{float} {
