@@ -9,7 +9,7 @@ namespace runtime {
   }
 
   inline std::string FunctionValue::to_string(void) const {
-    return "[Function" + function_dec_->name_get() + "]";
+    return "[Function " + function_dec_->name_get() + "]";
   }
 
   inline bool FunctionValue::is_truthy(void) const {

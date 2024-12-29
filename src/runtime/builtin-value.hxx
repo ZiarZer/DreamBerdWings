@@ -9,7 +9,7 @@ namespace runtime {
   }
 
   inline std::string BuiltinValue::to_string(void) const {
-    return "[Function" + func_name_ + "]";
+    return "[Function " + func_name_ + "]";
   }
 
   inline bool BuiltinValue::is_truthy(void) const {

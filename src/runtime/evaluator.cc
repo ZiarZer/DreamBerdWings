@@ -5,9 +5,27 @@ namespace runtime {
     : ast::Visitor()
     , current_value_(nullptr)
     , current_function_(nullptr)
-    , return_value_(nullptr) {
-    variables_ = std::map<std::string, Value*>();
-    variables_["print"] = new BuiltinValue("print");
+    , return_value_(nullptr)
+    , scopes_(std::stack<std::map<std::string, Value*>*>()) {
+    new_scope();
+    add_builtins();
+  }
+
+  void Evaluator::add_builtins() {
+    set_var_value("print", new BuiltinValue("print"));
+  }
+
+  void Evaluator::new_scope() {
+    auto created_scope = new std::map<std::string, Value*>();
+    if (scopes_.size()) {
+      auto parent_scope = scopes_.top();
+      created_scope->insert(parent_scope->begin(), parent_scope->end());
+    }
+    scopes_.push(created_scope);
+  }
+
+  void Evaluator::end_scope() {
+    scopes_.pop();
   }
 
   runtime::Value* Evaluator::evaluate(Ast* e) const {
@@ -98,17 +116,19 @@ namespace runtime {
   }
 
   void Evaluator::operator()(const CompoundStatement& e) {
+    new_scope();
     for (Statement* statement : *(e.statements_get())) {
       statement->accept(*this);
       if (return_value_) {
         if (current_function_) {
           return_value_ = nullptr; // Reset
-          return;
+          break;
         } else {
           // TODO error: return outside of function
         }
       }
     }
+    end_scope();
 
     // Functions with no return statement returns undefined
     if (current_function_) {
@@ -145,7 +165,7 @@ namespace runtime {
   void Evaluator::operator()(const EmptyStatement& e) {}
 
   void Evaluator::operator()(const SimpleVar& e) {
-    Value* variable_value = variables_[e.name_get()];
+    Value* variable_value = get_var_value(e.name_get());
     current_value_ = variable_value ? variable_value : new StringValue(e.name_get());
   }
 
@@ -181,20 +201,21 @@ namespace runtime {
     Value* callee_value = evaluate(e.callee_get());
     FunctionValue* function_value = dynamic_cast<FunctionValue*>(callee_value);
     if (function_value) {
-      // TODO: add scopes
+      new_scope();
       int param_index = 0;
       auto fundec = function_value->function_dec_get();
       auto args = fundec->args_get();
       auto params = e.params_get();
 
       for (VariableDec* vardec : *args) {
-        Exp* param = (param_index < args->size()) ? (*params)[param_index++] : new UndefinedExp(e.location_get());
+        Exp* param = (param_index < params->size()) ? params->at(param_index++) : new UndefinedExp(e.location_get());
         evaluate(new VariableDec(vardec->location_get(), vardec->name_get(), param, true, true));
       }
 
       current_function_ = fundec;
       return_value_ = nullptr;
       fundec->body_get()->accept(*this);
+      end_scope();
     } else {
       BuiltinValue* builtin_value = dynamic_cast<BuiltinValue*>(callee_value);
       auto params_values = std::vector<Value*>();
@@ -209,14 +230,14 @@ namespace runtime {
 
   void Evaluator::operator()(const VariableDec& e) {
     Exp* init = e.init_get();
-    variables_[e.name_get()] = init ? evaluate(init) : new UndefinedValue();
+    set_var_value(e.name_get(), init ? evaluate(init) : new UndefinedValue());
     current_value_ = new UndefinedValue();
   }
 
   void Evaluator::operator()(const GlobalConstantDec& e) {}
 
   void Evaluator::operator()(const FunctionDec& e) {
-    variables_[e.name_get()] = new FunctionValue(&e);
+    set_var_value(e.name_get(), new FunctionValue(&e));
     current_value_ = new UndefinedValue();
   }
 
