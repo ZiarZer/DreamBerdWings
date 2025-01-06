@@ -16,10 +16,12 @@ namespace runtime {
     Evaluator(void);
 
     runtime::Value* current_value_get() const;
-    Value* get_var_value(std::string var_name) const;
-    void set_var_value(std::string var_name, Value* value) const;
     void new_scope();
     void end_scope();
+    Value* get_var(std::map<std::string, Value*>* vars_map, std::string var_name);
+    Value* get_var(std::map<std::string, Value*>* vars_map, const Var* read_var);
+    void set_var(std::map<std::string, Value*>* vars_map, std::string var_name, Value* value);
+    void set_var(std::map<std::string, Value*>* vars_map, Var* written_var, Value* value);
     void add_builtins();
 
     runtime::Value* evaluate(Ast* e) const;

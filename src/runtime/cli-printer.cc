@@ -36,12 +36,12 @@ namespace runtime {
     stream_ << (e.is_array_get() ? '[' : '{');
 
     bool is_first_keyval = true;
-    std::map<std::string, Value*> properties = e.properties_get();
-    if (!properties.empty()) {
+    std::map<std::string, Value*>* properties = e.properties_get();
+    if (!properties->empty()) {
       stream_ << ' ';
     }
 
-    for (auto it = properties.begin(); it != properties.end(); it++) {
+    for (auto it = properties->begin(); it != properties->end(); it++) {
       if (is_first_keyval) {
         is_first_keyval = false;
       } else {
@@ -54,7 +54,7 @@ namespace runtime {
       it->second->accept(*this);
     }
 
-    if (!properties.empty()) {
+    if (!properties->empty()) {
       stream_ << ' ';
     }
     stream_ << (e.is_array_get() ? ']' : '}');

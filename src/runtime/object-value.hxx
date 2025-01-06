@@ -9,8 +9,16 @@ namespace runtime {
     return is_array_ ? "[Array object]" : "[Object object]";
   }
 
-  inline std::map<std::string, Value*> ObjectValue::properties_get() const {
+  inline std::map<std::string, Value*>* ObjectValue::properties_get() const {
     return properties_;
+  }
+
+  inline Value* ObjectValue::get_property(std::string property) {
+    return properties_->at(property);
+  }
+
+  inline void ObjectValue::set_property(std::string property, Value* value) {
+    properties_->insert_or_assign(property, value);
   }
 
   inline bool ObjectValue::is_truthy(void) const {
@@ -22,7 +30,7 @@ namespace runtime {
   }
 
   inline Value* ObjectValue::operator-() const {
-    return is_array_ && properties_.empty() ? new NumberValue(0) : new NumberValue();
+    return is_array_ && properties_->empty() ? new NumberValue(0) : new NumberValue();
   }
 
   inline Value* ObjectValue::operator!() const {
