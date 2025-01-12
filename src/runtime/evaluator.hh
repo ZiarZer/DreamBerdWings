@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include <stack>
 #include "../ast/all.hh"
 #include "../ast/visitor.hh"
 #include "all.hh"
@@ -18,10 +19,6 @@ namespace runtime {
     runtime::Value* current_value_get() const;
     void new_scope();
     void end_scope();
-    Value* get_var(std::map<std::string, Value*>* vars_map, std::string var_name);
-    Value* get_var(std::map<std::string, Value*>* vars_map, const Var* read_var);
-    void set_var(std::map<std::string, Value*>* vars_map, std::string var_name, Value* value);
-    void set_var(std::map<std::string, Value*>* vars_map, Var* written_var, Value* value);
     void add_builtins();
 
     runtime::Value* evaluate(Ast* e) const;
@@ -57,6 +54,7 @@ namespace runtime {
 
   protected:
     runtime::Value* current_value_;
+    runtime::Value** current_variable_value_;
     std::stack<std::map<std::string, Value*>*> scopes_;
     const ast::FunctionDec* current_function_;
     runtime::Value* return_value_;

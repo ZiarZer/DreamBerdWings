@@ -4,6 +4,7 @@ namespace runtime {
   Evaluator::Evaluator(void)
     : ast::Visitor()
     , current_value_(nullptr)
+    , current_variable_value_(nullptr)
     , current_function_(nullptr)
     , return_value_(nullptr)
     , scopes_(std::stack<std::map<std::string, Value*>*>()) {
@@ -12,7 +13,7 @@ namespace runtime {
   }
 
   void Evaluator::add_builtins() {
-    set_var(scopes_.top(), "print", new BuiltinValue("print"));
+    scopes_.top()->insert_or_assign("print", new BuiltinValue("print"));
   }
 
   void Evaluator::new_scope() {
@@ -168,11 +169,29 @@ namespace runtime {
   void Evaluator::operator()(const EmptyStatement& e) {}
 
   void Evaluator::operator()(const SimpleVar& e) {
-    current_value_ = get_var(scopes_.top(), &e);
+    std::string var_name = e.name_get();
+    if (scopes_.top()->find(var_name) == scopes_.top()->end()) {
+      scopes_.top()->insert_or_assign(var_name, nullptr);
+    }
+    current_variable_value_ = &(scopes_.top()->at(var_name));
+    current_value_ = *current_variable_value_ ? *current_variable_value_ : new StringValue(var_name);
   }
 
   void Evaluator::operator()(const SubscriptVar& e) {
-    current_value_ = get_var(scopes_.top(), &e);
+    ObjectValue* mother_var = dynamic_cast<ObjectValue*>(evaluate(e.var_get()));
+    if (!mother_var) {
+      current_value_ = new UndefinedValue();
+      current_variable_value_ = nullptr;
+      return;
+    }
+
+    auto properties = mother_var->properties_get();
+    std::string property = evaluate(e.index_get())->to_string();
+    if (properties->find(property) == properties->end()) {
+      properties->insert_or_assign(property, nullptr);
+    }
+    current_variable_value_ = &(properties->at(property));
+    current_value_ = *current_variable_value_ ? *current_variable_value_ : new UndefinedValue();
   }
 
   void Evaluator::operator()(const TimeWatchVar& e) {}
@@ -207,19 +226,22 @@ namespace runtime {
   }
 
   void Evaluator::operator()(const AssignExp& e) {
-    set_var(scopes_.top(), e.lvalue_get(), evaluate(e.expression_get()));
+    Value* var_value = evaluate(e.lvalue_get());
+    if (current_variable_value_) {
+      *current_variable_value_ = evaluate(e.expression_get());
+    }
   }
 
   void Evaluator::operator()(const VariableDec& e) {
     Exp* init = e.init_get();
-    set_var(scopes_.top(), e.name_get(), init ? evaluate(init) : new UndefinedValue());
+    scopes_.top()->insert_or_assign(e.name_get(), init ? evaluate(init) : new UndefinedValue());
     current_value_ = new UndefinedValue();
   }
 
   void Evaluator::operator()(const GlobalConstantDec& e) {}
 
   void Evaluator::operator()(const FunctionDec& e) {
-    set_var(scopes_.top(), e.name_get(), new FunctionValue(&e));
+    scopes_.top()->insert_or_assign(e.name_get(), new FunctionValue(&e));
     current_value_ = new UndefinedValue();
   }
 

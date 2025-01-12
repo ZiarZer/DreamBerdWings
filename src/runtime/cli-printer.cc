@@ -42,6 +42,9 @@ namespace runtime {
     }
 
     for (auto it = properties->begin(); it != properties->end(); it++) {
+      if (!it->second) {
+        continue;
+      }
       if (is_first_keyval) {
         is_first_keyval = false;
       } else {
