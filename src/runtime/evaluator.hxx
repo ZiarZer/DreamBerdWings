@@ -26,9 +26,6 @@ namespace runtime {
     if (const SubscriptVar* subscript_var = dynamic_cast<const SubscriptVar*>(read_var)) {
       mother_var = subscript_var->var_get();
       property = evaluate(subscript_var->index_get())->to_string();
-    } else if (const PropertyVar* property_var = dynamic_cast<const PropertyVar*>(read_var)) {
-      mother_var = property_var->var_get();
-      property = property_var->property_get();
     }
     if (ObjectValue* mother_var_object_value = dynamic_cast<ObjectValue*>(get_var(vars_map, mother_var))) {
       return mother_var_object_value->get_property(property);
@@ -51,9 +48,6 @@ namespace runtime {
     if (SubscriptVar* subscript_var = dynamic_cast<SubscriptVar*>(written_var)) {
       mother_var = subscript_var->var_get();
       property = evaluate(subscript_var->index_get())->to_string();
-    } else if (PropertyVar* property_var = dynamic_cast<PropertyVar*>(written_var)) {
-      mother_var = property_var->var_get();
-      property = property_var->property_get();
     }
     if (ObjectValue* mother_var_object_value = dynamic_cast<ObjectValue*>(get_var(vars_map, mother_var))) {
       mother_var_object_value->set_property(property, value);

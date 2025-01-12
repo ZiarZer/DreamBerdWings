@@ -64,11 +64,6 @@ namespace parse {
     return new ast::SubscriptVar(location, var, index);
   }
 
-  inline ast::PropertyVar*
-  DreamBerdDriver::make_PropertyVar(const parse::location& location, ast::Var* var, std::string property) const {
-    return new ast::PropertyVar(location, var, property);
-  }
-
   inline ast::TimeWatchVar* DreamBerdDriver::make_TimeWatchVar(const parse::location& location,
                                                                ast::Var* var,
                                                                ast::TimeWatchVar::Time time) const {

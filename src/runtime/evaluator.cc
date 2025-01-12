@@ -175,10 +175,6 @@ namespace runtime {
     current_value_ = get_var(scopes_.top(), &e);
   }
 
-  void Evaluator::operator()(const PropertyVar& e) {
-    current_value_ = get_var(scopes_.top(), &e);
-  }
-
   void Evaluator::operator()(const TimeWatchVar& e) {}
 
   void Evaluator::operator()(const CallExp& e) {

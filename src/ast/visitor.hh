@@ -19,7 +19,6 @@ namespace ast {
     virtual void operator()(const UndefinedExp&) = 0;
     virtual void operator()(const SimpleVar&) = 0;
     virtual void operator()(const SubscriptVar&) = 0;
-    virtual void operator()(const PropertyVar&) = 0;
     virtual void operator()(const TimeWatchVar&) = 0;
     virtual void operator()(const CallExp&) = 0;
     virtual void operator()(const AssignExp& e) = 0;

@@ -174,11 +174,6 @@ namespace ast {
     stream_ << ')';
   }
 
-  void PrettyPrinter::operator()(const PropertyVar& e) {
-    e.var_get()->accept(*this);
-    stream_ << "." << e.property_get();
-  }
-
   void PrettyPrinter::operator()(const VariableDec& e) {
     stream_ << (e.reassignable_get() ? "var " : "const ");
     stream_ << (e.editable_get() ? "var " : "const ");

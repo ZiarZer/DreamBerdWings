@@ -37,7 +37,6 @@ namespace runtime {
     void operator()(const UndefinedExp&) override;
     void operator()(const SimpleVar& e) override;
     void operator()(const SubscriptVar& e) override;
-    void operator()(const PropertyVar& e) override;
     void operator()(const TimeWatchVar& e) override;
     void operator()(const CallExp& e) override;
     void operator()(const AssignExp& e) override;

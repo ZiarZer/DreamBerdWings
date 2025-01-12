@@ -19,7 +19,6 @@
 #include "null-exp.hh"
 #include "number-exp.hh"
 #include "object-exp.hh"
-#include "property-var.hh"
 #include "punctuation.hh"
 #include "return-statement.hh"
 #include "reverse-statement.hh"

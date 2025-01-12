@@ -205,7 +205,7 @@ keyvalues.1:
 lvalue:
     id { $$ = driver.make_SimpleVar(@$, $1); }
   | lvalue "[" exp "]" { $$ = driver.make_SubscriptVar(@$, $1, $3); }
-  | lvalue "." id { $$ = driver.make_PropertyVar(@$, $1, $3); }
+  | lvalue "." id { $$ = driver.make_SubscriptVar(@$, $1, driver.make_StringExp(@$, $3)); }
   ;
 id:
     ID { $$ = $1; }

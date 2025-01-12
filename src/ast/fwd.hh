@@ -17,7 +17,6 @@ namespace ast {
   class UndefinedExp;
   class SimpleVar;
   class SubscriptVar;
-  class PropertyVar;
   class TimeWatchVar;
   class CallExp;
   class Statement;
